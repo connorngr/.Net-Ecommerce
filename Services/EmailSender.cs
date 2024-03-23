@@ -9,11 +9,15 @@ public class EmailSender : IEmailSender
 {
     private readonly ILogger _logger;
 
-    public EmailSender(
+    public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor,
                        ILogger<EmailSender> logger)
     {
+        Options = optionsAccessor.Value;
         _logger = logger;
     }
+
+    public AuthMessageSenderOptions Options { get; } //Set with Secret Manager.
+
 
 
     public async Task SendEmailAsync(string toEmail, string subject, string message)
