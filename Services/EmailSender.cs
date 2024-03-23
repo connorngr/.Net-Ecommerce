@@ -39,6 +39,7 @@ public class EmailSender : IEmailSender
         MailMessage email = new MailMessage(senderAddress, new MailAddress(recipientEmail));
         email.Subject = subject;
         email.Body = message;
+        email.IsBodyHtml = true;
         client.Send(email);
     }
 }
