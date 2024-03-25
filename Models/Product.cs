@@ -16,7 +16,7 @@ namespace WebApp.Models
         [Required]
         public int Quantity { get; set; }
         [Required]
-        public BigInteger Price { get; set; }
+        public decimal Price { get; set; }
         public string Img_Url { get; set; }
         [Required]
         public int CategoryId { get; set; }
