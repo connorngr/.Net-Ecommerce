@@ -12,8 +12,8 @@ using WebApp.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20240325023221_test")]
-    partial class test
+    [Migration("20240325065610_wth")]
+    partial class wth
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
