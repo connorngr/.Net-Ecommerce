@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using WebApp.Areas.Identity.Data;
+using WebApp.Constants;
 
 namespace WebApp.Areas.Identity.Pages.Account
 {
@@ -121,6 +122,8 @@ namespace WebApp.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    //add role
+                    await _userManager.AddToRoleAsync(user, Roles.User.ToString());
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

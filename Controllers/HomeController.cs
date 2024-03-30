@@ -1,21 +1,32 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApp.Models;
+using WebApp.Repositories;
 
 namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IHomeRepository _homeRepository;
+        public HomeController(ILogger<HomeController> logger, IHomeRepository homeRepository)
         {
+            _homeRepository = homeRepository;
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string Search="", int CategoryID = 0)
         {
-            return View();
+            IEnumerable<Product> products = await _homeRepository.GetProducts(Search, CategoryID);
+            IEnumerable<Category> categories = await _homeRepository.Categories();
+            ProductDisplayModel productDisplayModel = new ProductDisplayModel
+            {
+                Products = products,
+                Categories = categories,
+                Search = Search,
+                CategoryID = CategoryID
+            };
+            return View(productDisplayModel);
         }
 
         public IActionResult Privacy()

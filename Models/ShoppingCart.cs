@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebApp.Areas.Identity.Data;
 
 namespace WebApp.Models
 {
@@ -8,7 +9,7 @@ namespace WebApp.Models
     {
         public int Id { get; set; }
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         [Required]
         public bool isDeleted { get; set; } = false;
 

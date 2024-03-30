@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace WebApp.Models
 {
@@ -16,10 +17,13 @@ namespace WebApp.Models
         [Required]
         public int Quantity { get; set; }
         [Required]
-        public decimal Price { get; set; }
+        public int Price { get; set; }
+        [MaybeNull]
         public string Img_Url { get; set; }
         [Required]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        [NotMapped]
+        public string CategoryName { get; set; }
     }
 }
