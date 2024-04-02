@@ -33,7 +33,7 @@ namespace WebApp.Repositories
                                 Price = product.Price,
                                 CategoryName = category.CategoryName,
                                 CategoryId = product.CategoryId
-                            }).ToListAsync();
+                            }).ToListAsync();//second where won't be evaluated if Search is null or space
             if (categoryID > 0)
             {
                 

@@ -11,12 +11,11 @@ namespace WebApp.Models
     {
         public int Id { get; set; }
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
         [Required]
         public int OrderStatusId { get; set; }
         public bool IsDeleted { get; set; } = false;
-        /*public BigInteger TotalAmount {  get; set; }*/
         public OrderStatus OrderStatus { get; set; }
         public List<OrderDetail> OrderDetail { get; set; }
         public User User { get; set; }

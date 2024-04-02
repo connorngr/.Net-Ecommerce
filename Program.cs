@@ -7,8 +7,11 @@ using WebApp.Services;
 using WebApp.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("UserContextConnection") ?? throw new InvalidOperationException("Connection string 'UserContextConnection' not found.");
-
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 builder.Services.AddDbContext<UserContext>(options => options.UseSqlServer(connectionString));
+
+
 
 /*builder.Services.AddDefaultIdentity<User>()
     .AddDefaultTokenProviders()
@@ -25,18 +28,19 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddTransient<IHomeRepository, HomeRepository>();
-
+builder.Services.AddTransient<ICartRepository, CartRepository>();
+builder.Services.AddTransient<IUserOrderRepository, UserOrderRepository>();
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
-    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    googleOptions.ClientId = builder.Configuration.GetConnectionString("ClientId");
+    googleOptions.ClientSecret = builder.Configuration.GetConnectionString("ClientSecret");
 });
 var app = builder.Build();
 // Uncomment it when you run the project first time, It will registered an admin
-/*using (var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     await DbSeeder.SeedDefaultData(scope.ServiceProvider);
-}*/
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

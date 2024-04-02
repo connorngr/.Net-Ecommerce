@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using System.Net;
 using WebApp.Areas.Identity.Data;
 using WebApp.Data;
 using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp.Repositories
 {
@@ -12,11 +16,13 @@ namespace WebApp.Repositories
         private readonly UserContext _db;
         private readonly UserManager<User> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public CartRepository(UserContext db, IHttpContextAccessor httpContextAccessor, UserManager<User> userManager) 
+        private readonly ILogger _logger;
+        public CartRepository(UserContext db, IHttpContextAccessor httpContextAccessor, UserManager<User> userManager, ILogger<CartRepository> logger) 
         {
             _db = db;
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
+            _logger = logger;
         }
         public async Task<int> AddItem(int ProductId, int Qty)
         {
@@ -64,7 +70,127 @@ namespace WebApp.Repositories
             var cartItemCount = await GetCartItemCount(userId);
             return cartItemCount;
         }
+        public async Task<int> RemoveItem(int ProductId)
+        {
+            //using var transaction = _db.Database.BeginTransaction();
+            string userId = GetUserId();
+            try
+            {
+                if (string.IsNullOrEmpty(userId))
+                    throw new Exception("user is not logged-in");
+                var cart = await GetCart(userId);
+                if (cart is null)
+                    throw new Exception("Invalid cart");
+                // cart detail section
+                var cartItem = _db.CartDetails
+                                  .FirstOrDefault(a => a.ShoppingCartId == cart.Id && a.ProductId == ProductId);
+                if (cartItem is null)
+                    throw new Exception("No items in cart");
+                else if (cartItem.Quantity == 1)
+                    _db.CartDetails.Remove(cartItem);
+                else
+                    cartItem.Quantity = cartItem.Quantity - 1;
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
 
+            }
+            var cartItemCount = await GetCartItemCount(userId);
+            return cartItemCount;
+        }
+
+        public async Task<int> GetTotalPrice()
+        {
+            var userId = GetUserId();
+            if (string.IsNullOrEmpty(userId))
+                throw new Exception("User is not logged-in");
+            var cart = await GetCart(userId);
+            if (cart is null)
+                throw new Exception("Invalid cart");
+            var cartDetail = _db.CartDetails
+                                .Where(a => a.ShoppingCartId == cart.Id).ToList();
+            if (cartDetail.Count == 0)
+                throw new Exception("Cart is empty");
+            var totalAmount = 0;
+            foreach (var cartItem in cartDetail)
+            {
+                totalAmount += cartItem.UnitPriced * cartItem.Quantity;
+            }
+            return totalAmount;
+        }
+        public async Task<bool> DoCheckout()
+        {
+            using var transaction = _db.Database.BeginTransaction();
+            try
+            {
+                // logic
+                // move data from cartDetail to order and order detail then we will remove cart detail
+                var userId = GetUserId();
+                if (string.IsNullOrEmpty(userId))
+                    throw new Exception("User is not logged-in");
+                var cart = await GetCart(userId);
+                if (cart is null)
+                    throw new Exception("Invalid cart");
+                var cartDetail = _db.CartDetails
+                                    .Where(a => a.ShoppingCartId == cart.Id).ToList();
+                if (cartDetail.Count == 0)
+                    throw new Exception("Cart is empty");
+                //Check if cart,user is all ok
+                //Then call momo api to pay, if true create order else send payment failed
+                //calculate total amount 
+                var totalAmount = 0;
+                foreach (var cartItem in cartDetail)
+                {
+                    totalAmount += cartItem.UnitPriced * cartItem.Quantity;
+                }
+                _logger.LogInformation(totalAmount.ToString());
+                var order = new Order
+                {
+                    UserId = userId,
+                    OrderDate = DateTime.UtcNow,
+                    OrderStatusId = 1//pending
+                };
+                _db.Orders.Add(order);
+                _db.SaveChanges();
+                foreach (var item in cartDetail)
+                {
+                    var orderDetail = new OrderDetail
+                    {
+                        ProductId = item.ProductId,
+                        OrderId = order.Id,
+                        Quantity = item.Quantity,
+                        UnitPrice = item.UnitPriced
+                    };
+                    _db.OrderDetails.Add(orderDetail);
+                }
+                _db.SaveChanges();
+
+                // removing the cartdetails
+                _db.CartDetails.RemoveRange(cartDetail);
+                _db.SaveChanges();
+                transaction.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+        
+        public async Task<ShoppingCart> GetUserCart()
+        {
+            var userId = GetUserId();
+            if (userId == null)
+                throw new Exception("Invalid userid");
+            var shoppingCart = await _db.ShoppingCarts
+                                  .Include(a => a.CartDetails)
+                                  .ThenInclude(a => a.Product)
+                                  .ThenInclude(a => a.Category)
+                                  .Where(a => a.UserId == userId).FirstOrDefaultAsync();
+            return shoppingCart;
+        }
         public async Task<int> GetCartItemCount(string userId = "")
         {
             if (string.IsNullOrEmpty(userId)) // updated line
@@ -79,7 +205,7 @@ namespace WebApp.Repositories
                         ).ToListAsync();
             return data.Count;
         }
-        private async Task<ShoppingCart> GetCart(string userId)
+        public async Task<ShoppingCart> GetCart(string userId)
         {
             var cart = _db.ShoppingCarts.FirstOrDefault(x => x.UserId == userId);
             return cart;

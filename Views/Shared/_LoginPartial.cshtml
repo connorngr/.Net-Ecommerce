@@ -5,8 +5,15 @@
 @inject UserManager<User> UserManager
 
 <ul class="navbar-nav">
+        
 @if (SignInManager.IsSignedIn(User))
 {
+        <li class="nav-item">
+            <a class="nav-link" href="/Cart/GetUserCart">
+                <span id="cartCount" class="badge text-bg-info text-black">0</span>
+                <i class="bi bi-cart text-white"></i>
+            </a>
+        </li>
     <li class="nav-item">
         <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!
                 @if (User.IsInRole("Admin"))

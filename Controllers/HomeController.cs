@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using WebApp.Models;
 using WebApp.Repositories;
+using WebApp.Services;
 
 namespace WebApp.Controllers
 {
@@ -28,16 +30,16 @@ namespace WebApp.Controllers
             };
             return View(productDisplayModel);
         }
+        
+        /* public IActionResult Privacy()
+         {
+             return View();
+         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+         public IActionResult Error()
+         {
+             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+         }*/
     }
 }
