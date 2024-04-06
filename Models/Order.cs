@@ -13,6 +13,8 @@ namespace WebApp.Models
         [Required]
         public string UserId { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
+        public string ShippingAddress { get; set; }
+        public string Notes { get; set; }
         [Required]
         public int OrderStatusId { get; set; }
         public bool IsDeleted { get; set; } = false;

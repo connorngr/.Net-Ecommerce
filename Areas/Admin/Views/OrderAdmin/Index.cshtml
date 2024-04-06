@@ -1,0 +1,39 @@
+﻿@model IEnumerable<WebApp.Models.OrderDetail>
+
+@{
+    ViewData["Title"] = "Index";
+    double total = 0;
+}
+
+<h2>Orders</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th>TotalPrice</th>
+            <th>ShippingAddress</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Order.OrderDate</td>
+                <td>@(product.Quantity * product.UnitPrice)</td>
+                <td>@product.Order.ShippingAddress</td>
+                <td>@product.Order.Notes</td>
+                <td>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@product.Id">Delete</a>
+                </td>
+            </tr>
+            total = total + (product.Quantity * product.UnitPrice);
+        }
+    </tbody>
+</table>
+<div class="card">
+    <div class="card-body">
+        <h5 class="btn btn-block btn-lg" style="width: 100%; cursor: default; background-color: #ffc107;">Tổng tiền là: @total</h5>
+    </div>
+</div>

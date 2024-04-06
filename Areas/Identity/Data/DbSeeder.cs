@@ -10,23 +10,22 @@ namespace WebApp.Areas.Identity.Data
             var userMgr = service.GetService<UserManager<User>>();
             var roleMgr = service.GetService<RoleManager<IdentityRole>>();
             //adding some roles to db
-            await roleMgr.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
-            await roleMgr.CreateAsync(new IdentityRole(Roles.User.ToString()));
-
-            // create admin user
+            await roleMgr.CreateAsync(new IdentityRole("Admin"));
+            await roleMgr.CreateAsync(new IdentityRole("Employee"));
+            await roleMgr.CreateAsync(new IdentityRole("Customer"));
 
             var admin = new User
             {
-                UserName = "admin@gmail.com",
-                Email = "admin@gmail.com",
+                UserName = "hani101003@gmail.com",
+                Email = "hani101003@gmail.com",
                 EmailConfirmed = true
             };
 
             var userInDb = await userMgr.FindByEmailAsync(admin.Email);
             if (userInDb is null)
             {
-                await userMgr.CreateAsync(admin, "Coincard1@3");
-                await userMgr.AddToRoleAsync(admin, Roles.Admin.ToString());
+                await userMgr.CreateAsync(admin, "Abc@123");
+                await userMgr.AddToRoleAsync(admin, "Admin");
             }
 
         }

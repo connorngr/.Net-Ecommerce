@@ -1,0 +1,26 @@
+﻿@model IEnumerable<WebApp.Models.Product>
+
+<h2>Products</h2>
+
+<a class="btn btn-primary mb-4" asp-action="Add">Thêm Sản Phẩm</a>
+
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4 gap-4">
+        @foreach (var product in Model)
+        {
+            <div class="card" style="width: 30%;">
+                <img class="card-img-top" src="@product.Img_Url" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@product.ProductName</h5>
+                    <p class="card-text fw-bold">Price: @product.Price</p>
+                    <p class="card-text">@product.Description</p>
+                    <p class="card-text">@product.Category?.CategoryName</p>
+                    <a class="btn btn-success" asp-action="Display" asp-route-id="@product.Id">View</a>
+                    <a class="btn btn-warning" asp-action="Update" asp-route-id="@product.Id">Edit</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@product.Id">Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

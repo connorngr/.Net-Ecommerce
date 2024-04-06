@@ -1,0 +1,11 @@
+﻿@model WebApp.Models.Product
+<h2>@Model.ProductName</h2>
+<div>
+    <h3>Price: @Model.Price</h3>
+    <p>@Model.Description</p>
+    @if (!string.IsNullOrEmpty(Model.Img_Url))
+    {
+        <img src="@Model.Img_Url" alt="Product Image" style="max-width:200px;" />
+    }
+</div>
+<a class="btn btn-warning mt-2" asp-action="Index">Back to List</a>

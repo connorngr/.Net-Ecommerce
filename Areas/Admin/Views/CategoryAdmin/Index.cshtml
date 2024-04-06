@@ -1,0 +1,23 @@
+﻿@model IEnumerable<WebApp.Models.Category>
+<h2>Categories</h2>
+<a class="btn btn-primary mb-4" asp-action="Add">Thêm Danh Mục</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.CategoryName</td>
+                <td>
+                    <a class="btn btn-warning" asp-action="Update" asp-route-id="@product.Id">Update</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@product.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
