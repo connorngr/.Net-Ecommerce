@@ -38,14 +38,14 @@ namespace WebApp.Controllers
             int cartItem = await _cartRepo.GetCartItemCount();
             return Ok(cartItem);
         }
-        /*public async Task<IActionResult> Checkout()
+        public async Task<IActionResult> Checkout(string address, string phoneNum)
         {
-            *//*bool isCheckedOut = await _cartRepo.DoCheckout();
+            bool isCheckedOut = await _cartRepo.DoCheckout();
             if (!isCheckedOut)
                 throw new Exception("Something happen in server side");
-            return RedirectToAction("Index", "Home");*//*
-        }*/
-        public async Task<IActionResult> Checkout()
+            return RedirectToAction("Index", "Home");
+        }
+        public async Task<IActionResult> CheckoutMomo()
         {
             //request params need to request to MoMo system
             string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
@@ -106,7 +106,6 @@ namespace WebApp.Controllers
         public ActionResult ConfirmPaymentClient(Result result)
         {
             string message = Request.Query["message"];
-
             //lấy kết quả Momo trả về và hiển thị thông báo cho người dùng (có thể lấy dữ liệu ở đây cập nhật xuống db)
             string rMessage = result.message;
             string rOrderId = result.orderId;
