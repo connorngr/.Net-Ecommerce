@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using WebApp.Areas.Identity.Data;
 using WebApp.Models;
 
@@ -21,6 +22,7 @@ public class UserContext : IdentityDbContext<User>
         // Add your customizations after calling base.OnModelCreating(builder);
 
     }
+
 
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }

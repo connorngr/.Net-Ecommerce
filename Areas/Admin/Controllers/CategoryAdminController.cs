@@ -2,6 +2,9 @@
 using WebApp.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using WebApp.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -11,11 +14,14 @@ namespace WebApp.Areas.Admin.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly UserContext _context;
+
         public CategoryAdminController(IProductRepository productRepository, ICategoryRepository
-        categoryRepository)
+        categoryRepository, UserContext context)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _context = context;
         }
         public async Task<IActionResult> Index()
         {
@@ -30,7 +36,7 @@ namespace WebApp.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(Category category)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 await _categoryRepository.AddAsync(category);
                 return RedirectToAction(nameof(Index));
@@ -53,12 +59,9 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            if (ModelState.IsValid)
-            {
-                await _categoryRepository.UpdateAsync(category);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(category);
+            await _categoryRepository.UpdateAsync(category);
+            return RedirectToAction(nameof(Index));
+            /*return View(category);*/
         }
         public async Task<IActionResult> Delete(int id)
         {
@@ -75,6 +78,11 @@ namespace WebApp.Areas.Admin.Controllers
             var category = await _categoryRepository.GetByIdAsync(id);
             if (category != null)
             {
+                var productsInCategory = await _context.Products.Where(p => p.CategoryId == id).ToListAsync();
+                if ( productsInCategory.Any())
+                {
+                    return BadRequest("Category cannot be deleted as it has associated products.");
+                }
                 await _categoryRepository.DeleteAsync(id);
             }
             return RedirectToAction(nameof(Index));

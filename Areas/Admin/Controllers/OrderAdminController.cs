@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Employee")]
     public class OrderAdminController : Controller
     {
         private readonly IOrderRepository _orderRepository;

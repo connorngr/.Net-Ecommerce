@@ -27,7 +27,7 @@ namespace WebApp.Repositories
         public async Task<int> AddItem(int ProductId, int Qty)
         {
             string userId = GetUserId();
-            using var transaction = _db.Database.BeginTransaction();
+            /*using var transaction = _db.Database.BeginTransaction();*/
             try
             {
                 if (string.IsNullOrEmpty(userId))
@@ -62,7 +62,7 @@ namespace WebApp.Repositories
                     _db.CartDetails.Add(cartItem);
                 }
                 _db.SaveChanges();
-                transaction.Commit();
+                /*transaction.Commit();*/
             }
             catch (Exception ex)
             {
@@ -119,7 +119,7 @@ namespace WebApp.Repositories
             }
             return totalAmount;
         }
-        public async Task<bool> DoCheckout()
+        public async Task<bool> DoCheckout(string address, string number, string notes)
         {
             using var transaction = _db.Database.BeginTransaction();
             try
@@ -136,9 +136,6 @@ namespace WebApp.Repositories
                                     .Where(a => a.ShoppingCartId == cart.Id).ToList();
                 if (cartDetail.Count == 0)
                     throw new Exception("Cart is empty");
-                //Check if cart,user is all ok
-                //Then call momo api to pay, if true create order else send payment failed
-                //calculate total amount 
                 var totalAmount = 0;
                 foreach (var cartItem in cartDetail)
                 {
@@ -149,7 +146,10 @@ namespace WebApp.Repositories
                 {
                     UserId = userId,
                     OrderDate = DateTime.UtcNow,
-                    OrderStatusId = 1//pending
+                    OrderStatusId = 1,//pending
+                    Notes = notes,
+                    PhoneNumber = number,
+                    ShippingAddress = address
                 };
                 _db.Orders.Add(order);
                 _db.SaveChanges();
@@ -172,9 +172,9 @@ namespace WebApp.Repositories
                 transaction.Commit();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                _logger.LogInformation(ex.Message);
                 return false;
             }
         }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApp.Models.OrderDetail>
+﻿@model IEnumerable<Order>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,33 +7,67 @@
 
 <h2>Orders</h2>
 
-<table class="table">
-    <thead>
+@if (Model != null && Model.Count() > 0)
+{
+    <table class="table table-striped">
         <tr>
-            <th>Time</th>
-            <th>TotalPrice</th>
-            <th>ShippingAddress</th>
-            <th>Notes</th>
+            <th>OrderDate</th>
+            <th>OrderStatus</th>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model)
+        @foreach (var order in Model)
         {
             <tr>
-                <td>@product.Order.OrderDate</td>
-                <td>@(product.Quantity * product.UnitPrice)</td>
-                <td>@product.Order.ShippingAddress</td>
-                <td>@product.Order.Notes</td>
-                <td>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@product.Id">Delete</a>
-                </td>
+                <td>@order.OrderDate.ToString("dd-MM-yyyy")</td>
+                <td>@order.OrderStatus.StatusName</td>
             </tr>
-            total = total + (product.Quantity * product.UnitPrice);
+            @if (order.OrderDetail != null && order.OrderDetail.Count > 0)
+            {
+                <tr>
+                    <td>
+                        <table class="table table-striped">
+                            <tr>
+                                <td>
+                                    Total:
+                                </td>
+                                <td>
+                                    @(order.OrderDetail.Select(item => item.Product.Price * item.Quantity).Sum())
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Product</th>
+                                <th>Image</th>
+                                <th>Genre</th>
+                                <th>Unit Price</th>
+                                <th>Total Price</th>
+                            </tr>
+                            @foreach (var item in order.OrderDetail)
+                            {
+                                <tr>
+                                    <td>@item.Product.ProductName</td>
+                                    <td>
+                                        @if (string.IsNullOrEmpty(item.Product.Img_Url))
+                                        {
+                                            <img src="/images/NoImage.png" style="width:80px;height:100px" />
+                                        }
+                                        else
+                                        {
+                                            <img src="/images/@item.Product.Img_Url" style="width:80px;height:100px" />
+                                        }
+                                    </td>
+                                    <td>@item.Product.Category.CategoryName</td>
+                                    <td>@item.Product.Price X @item.Quantity</td>
+                                    <td> @(item.Product.Price * item.Quantity) </td>
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                </tr>
+            }
         }
-    </tbody>
-</table>
-<div class="card">
-    <div class="card-body">
-        <h5 class="btn btn-block btn-lg" style="width: 100%; cursor: default; background-color: #ffc107;">Tổng tiền là: @total</h5>
-    </div>
-</div>
+    </table>
+
+}
+else
+{
+    <h5>Order is empty</h5>
+}

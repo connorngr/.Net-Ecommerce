@@ -38,14 +38,14 @@ namespace WebApp.Controllers
             int cartItem = await _cartRepo.GetCartItemCount();
             return Ok(cartItem);
         }
-        public async Task<IActionResult> Checkout(string address, string phoneNum)
+        /*public async Task<IActionResult> Checkout(string address, string phoneNum)
         {
             bool isCheckedOut = await _cartRepo.DoCheckout();
             if (!isCheckedOut)
                 throw new Exception("Something happen in server side");
             return RedirectToAction("Index", "Home");
-        }
-        public async Task<IActionResult> CheckoutMomo()
+        }*/
+        public async Task<IActionResult> Checkout()
         {
             //request params need to request to MoMo system
             string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
@@ -103,21 +103,29 @@ namespace WebApp.Controllers
             return Redirect(jmessage.GetValue("payUrl").ToString());
             /*return true;*/
         }
-        public ActionResult ConfirmPaymentClient(Result result)
+        public async Task<ActionResult> ConfirmPaymentClient(Result result)
         {
-            string message = Request.Query["message"];
             //lấy kết quả Momo trả về và hiển thị thông báo cho người dùng (có thể lấy dữ liệu ở đây cập nhật xuống db)
-            string rMessage = result.message;
-            string rOrderId = result.orderId;
             string rErrorCode = result.errorCode; // = 0: thanh toán thành công
-            _logger.LogInformation(message);
-            return View();
+            bool succeed = false;
+            //Huy: Bad
+            _logger.LogInformation("abc" + rErrorCode);
+            if (Int16.Parse(rErrorCode) == 0)
+            {
+                succeed = true;
+            }
+            return View(succeed);
         }
         [HttpPost]
-        public void SavePayment()
+        public async Task<IActionResult> ConfirmPaymentClient(string address, string number, string notes)
         {
             //cập nhật dữ liệu vào db
-            /*String a = "";*/
+            String a = "";
+            bool isCheckedOut = await _cartRepo.DoCheckout(address, number, notes);
+            if (!isCheckedOut)
+                throw new Exception("Something happen in server side");
+            _logger.LogInformation(address);
+            return RedirectToAction("UserOrders", "UserOrder");
         }
     }
 }

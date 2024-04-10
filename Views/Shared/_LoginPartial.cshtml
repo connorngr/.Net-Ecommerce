@@ -8,6 +8,7 @@
         
 @if (SignInManager.IsSignedIn(User))
 {
+    
         <li class="nav-item">
             <a class="nav-link" href="/Cart/GetUserCart">
                 <span id="cartCount" class="badge text-bg-info text-black">0</span>
@@ -19,6 +20,10 @@
                 @if (User.IsInRole("Admin"))
                 {
                     <span>(Admin)</span>
+                }
+                @if (User.IsInRole("Employee"))
+                {
+                    <span>(Employee)</span>
                 }
             </a>
     </li>

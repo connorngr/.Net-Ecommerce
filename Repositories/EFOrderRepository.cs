@@ -1,6 +1,7 @@
 ﻿using WebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
+using WebApp.Areas.Identity.Data;
 
 namespace WebApp.Repositories
 {
@@ -16,9 +17,13 @@ namespace WebApp.Repositories
 
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
-            return await _context.Orders
-            .Include(p => p.OrderDetail) // Include thông tin về category
-            .ToListAsync();
+            IEnumerable<Order> orders = await _context.Orders
+                            .Include(x => x.OrderStatus)
+                            .Include(x => x.OrderDetail)
+                            .ThenInclude(x => x.Product)
+            .ThenInclude(x => x.Category)
+                            .ToListAsync();
+            return orders;
         }
     }
 }

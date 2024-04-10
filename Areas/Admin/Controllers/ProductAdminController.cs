@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Employee")]
     public class ProductAdminController : Controller
     {
         private readonly IProductRepository _productRepository;
@@ -26,17 +26,18 @@ namespace WebApp.Areas.Admin.Controllers
             return View(products);
         }
         // Hiển thị form thêm sản phẩm mới
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add()
         {
             var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            ViewBag.Categories = new SelectList(categories, "Id", "CategoryName");
             return View();
         }
         // Xử lý thêm sản phẩm mới
         [HttpPost]
         public async Task<IActionResult> Add(Product product, IFormFile imageUrl)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 if (imageUrl != null)
                 {
@@ -48,7 +49,7 @@ namespace WebApp.Areas.Admin.Controllers
             }
             // Nếu ModelState không hợp lệ, hiển thị form với dữ liệu đã nhập
             var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            ViewBag.Categories = new SelectList(categories, "Id", "CategoryName");
             return View(product);
         }
         // Viết thêm hàm SaveImage (tham khảo bài 02)
@@ -80,10 +81,7 @@ namespace WebApp.Areas.Admin.Controllers
                 return NotFound();
             }
             var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name",
-
-            product.CategoryId);
-
+            ViewBag.Categories = new SelectList(categories, "Id", "CategoryName");
             return View(product);
         }
         // Xử lý cập nhật sản phẩm
@@ -97,13 +95,11 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var existingProduct = await
+                var existingProduct = await _productRepository.GetByIdAsync(id); // Giả định có phương thức GetByIdAsync
 
-                _productRepository.GetByIdAsync(id); // Giả định có phương thức GetByIdAsync
-                                                     // Giữ nguyên thông tin hình ảnh nếu không có hình mới được tải lên
-
+                // Giữ nguyên thông tin hình ảnh nếu không có hình mới được tải lên
                 if (imageUrl == null)
                 {
                     product.Img_Url = existingProduct.Img_Url;
@@ -127,6 +123,7 @@ namespace WebApp.Areas.Admin.Controllers
             return View(product);
         }
         // Hiển thị form xác nhận xóa sản phẩm
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var product = await _productRepository.GetByIdAsync(id);
