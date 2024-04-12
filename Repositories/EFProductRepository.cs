@@ -6,8 +6,8 @@ namespace WebApp.Repositories
 {
     public class EFProductRepository : IProductRepository
     {
-        public readonly UserContext _context;
-        public EFProductRepository(UserContext context)
+        public readonly ApplicationDbContext _context;
+        public EFProductRepository(ApplicationDbContext context)
         {
             _context = context;
         }

@@ -8,9 +8,9 @@ namespace WebApp.Repositories
     
     public class EFOrderRepository : IOrderRepository
     {
-        public readonly UserContext _context;
+        public readonly ApplicationDbContext _context;
 
-        public EFOrderRepository(UserContext context)
+        public EFOrderRepository(ApplicationDbContext context)
         {
             _context = context;
         }

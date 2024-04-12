@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using WebApp.Models;
@@ -7,6 +8,7 @@ using WebApp.Services;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ICartRepository _cartRepo;

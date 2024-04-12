@@ -14,10 +14,10 @@ namespace WebApp.Areas.Admin.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly UserContext _context;
+        private readonly ApplicationDbContext _context;
 
         public CategoryAdminController(IProductRepository productRepository, ICategoryRepository
-        categoryRepository, UserContext context)
+        categoryRepository, ApplicationDbContext context)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;

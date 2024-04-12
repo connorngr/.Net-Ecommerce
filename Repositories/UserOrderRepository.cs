@@ -8,13 +8,13 @@ namespace WebApp.Repositories
 {
     public class UserOrderRepository : IUserOrderRepository
     {
-        private readonly UserContext _db;
+        private readonly ApplicationDbContext _db;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
 
-        public UserOrderRepository(UserContext db,
-            UserManager<User> userManager,
+        public UserOrderRepository(ApplicationDbContext db,
+            UserManager<ApplicationUser> userManager,
              IHttpContextAccessor httpContextAccessor)
         {
             _db = db;

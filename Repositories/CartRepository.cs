@@ -13,11 +13,11 @@ namespace WebApp.Repositories
 {
     public class CartRepository : ICartRepository
     {
-        private readonly UserContext _db;
-        private readonly UserManager<User> _userManager;
+        private readonly ApplicationDbContext _db;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger _logger;
-        public CartRepository(UserContext db, IHttpContextAccessor httpContextAccessor, UserManager<User> userManager, ILogger<CartRepository> logger) 
+        public CartRepository(ApplicationDbContext db, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, ILogger<CartRepository> logger) 
         {
             _db = db;
             _userManager = userManager;

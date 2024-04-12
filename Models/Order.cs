@@ -22,7 +22,7 @@ namespace WebApp.Models
         public bool IsPaid { get; set; } = false;
         public OrderStatus OrderStatus { get; set; }
         public List<OrderDetail> OrderDetail { get; set; }
-        public User User { get; set; }
+        public ApplicationUser User { get; set; }
 
     }
 }

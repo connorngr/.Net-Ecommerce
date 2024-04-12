@@ -1,26 +1,59 @@
 ﻿@model IEnumerable<WebApp.Models.Product>
 
-<h2>Products</h2>
+@{
+    ViewData["Title"] = "Index";
+}
 
-<a class="btn btn-primary mb-4" asp-action="Add">Thêm Sản Phẩm</a>
+<h1>Products</h1>
 
-
-<div class="container">
-    <div class="row row-cols-1 row-cols-md-3 g-4 gap-4">
-        @foreach (var product in Model)
-        {
-            <div class="card" style="width: 30%;">
-                <img class="card-img-top" src="@product.Img_Url" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">@product.ProductName</h5>
-                    <p class="card-text fw-bold">Price: @product.Price</p>
-                    <p class="card-text">@product.Description</p>
-                    <p class="card-text">@product.Category?.CategoryName</p>
-                    <a class="btn btn-success" asp-action="Display" asp-route-id="@product.Id">View</a>
-                    <a class="btn btn-warning" asp-action="Update" asp-route-id="@product.Id">Edit</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@product.Id">Delete</a>
-                </div>
-            </div>
-        }
-    </div>
-</div>
+<p>
+    <a class="btn btn-primary mb-4" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr class="text-center">
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="text-center">
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                <a class="btn btn-success" asp-action="Display" asp-route-id="@item.Id">View</a>
+                <a class="btn btn-warning" asp-action="Update" asp-route-id="@item.Id">Edit</a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
