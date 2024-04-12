@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Net;
+using System.Text.Encodings.Web;
+using WebApp.Areas.Identity.Data;
 using WebApp.Models;
 using WebApp.Repositories;
 using WebApp.Services;
@@ -11,10 +16,16 @@ namespace WebApp.Controllers
     {
         private readonly ICartRepository _cartRepo;
         private readonly ILogger _logger;
-        public CartController(ICartRepository cartRepo, ILogger<CartRepository> logger) 
+        private readonly IEmailSender _emailSender;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserManager<User> _userManager;
+        public CartController(IHttpContextAccessor httpContextAccessor, ICartRepository cartRepo, ILogger<CartRepository> logger, IEmailSender emailSender, UserManager<User> userManager) 
         { 
             _cartRepo = cartRepo;
             _logger = logger;
+            _emailSender = emailSender;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<IActionResult> AddItem(int ProductId, int Qty = 1, int redirect=0)
         {
@@ -58,6 +69,7 @@ namespace WebApp.Controllers
             string returnUrl = "https://localhost:7163/Cart/ConfirmPaymentClient";
             string notifyurl = "https://4c8d-2001-ee0-5045-50-58c1-b2ec-3123-740d.ap.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
             int price = await _cartRepo.GetTotalPrice();
+            _logger.LogInformation(price.ToString());
             string amount = price.ToString();//Số tiền cần thanh toán
             string orderid = DateTime.Now.Ticks.ToString(); //mã đơn hàng
             string requestId = DateTime.Now.Ticks.ToString(); //Định danh mỗi yêu cầu
@@ -120,7 +132,9 @@ namespace WebApp.Controllers
         public async Task<IActionResult> ConfirmPaymentClient(string address, string number, string notes)
         {
             //cập nhật dữ liệu vào db
-            String a = "";
+            var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            await _emailSender.SendEmailAsync(user.Email, "Your order has been placed successfully",
+                        $"Your order has been sent to our system <br/> Thank you for your purchase.");
             bool isCheckedOut = await _cartRepo.DoCheckout(address, number, notes);
             if (!isCheckedOut)
                 throw new Exception("Something happen in server side");

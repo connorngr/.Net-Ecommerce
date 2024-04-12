@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+
+@{
+    ViewData["Title"] = "Change role by email";
+}
+<h1>Change role by email</h1>
+<form asp-action="Index" method="post">
+    @Html.ValidationSummary()
+    <div class="form-group" class="col-12">
+        <label class="control-label">Email address</label>
+        <input type="email" id="email" name="email" placeholder="Account's email" class="form-control" required />
+    </div>
+    <div class="col-12">
+        <label class="visually-hidden" for="RoleName">Categories</label>
+        <select class="form-select" id="RoleName" name="RoleName">
+            <option selected>Choose...</option>
+            @foreach (var role in Model)
+            {
+                <option value="@role.Name">@role.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
