@@ -10,7 +10,7 @@
     <div class="col-10">
         <section>
             <form id="account" method="post">
-                <h2>Welcome back.</h2>
+                <h2>Welcome back</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
@@ -32,16 +32,16 @@
                 <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                 </div>
-                <div>
+                <div class="mt-3">
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                        <a id="forgot-password" class="text-decoration-none" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </p>
+                    @* <p>
+                        <a asp-page="./Register" class="text-decoration-none" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
                     </p>
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
+                        <a id="resend-confirmation" class="text-decoration-none" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                    </p> *@
                 </div>
             </form>
         </section>
