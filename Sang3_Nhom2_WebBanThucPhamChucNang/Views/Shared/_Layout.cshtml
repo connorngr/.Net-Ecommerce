@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Sang3_Nhom2_WebBanThucPhamChucNang.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="bottom-0 m-0">
 
 <header>
   <!-- Jumbotron -->
@@ -127,15 +127,17 @@
 
 
   <!-- Footer -->
-    <footer class="text-center text-white mt-auto " style="background-color:rgb(13 110 253);">
+    <footer class="text-center text-white mt-auto mt-auto " style="background-color:rgb(13 110 253);">
     <!-- Grid container -->
-    <div class="container p-4 pb-0">
+    <div class="container p-3 pb-0">
       <!-- Section: CTA -->
       <section class="">
         <p class="d-flex justify-content-center align-items-center">
             @if (User.Identity.IsAuthenticated)
             {
-                <span class="me-3">Chào mừng bạn đã trỡ lại</span>
+                <button id="login" asp-area="Identity" asp-page="/Account/Login" data-mdb-ripple-init type="button" class="btn btn-outline-light btn-rounded">
+                Đăng xuất!
+                </button>
             }
             else
             {
@@ -152,8 +154,8 @@
     <!-- Grid container -->
 
     <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-      Bạn có thể phản ánh vấn đề về web:
+    <div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.2);">
+      Góp ý phản hồi về web:
       <a class="text-white" href="https://mdbootstrap.com/"> tại đây</a>
     </div>
     <!-- Copyright -->

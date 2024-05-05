@@ -5,14 +5,13 @@
 }
 @if (Model == false)
 {
-    <h1>Bạn có thể thử thanh toán lại</h1>
+    <h1 class="m-auto">Bạn có thể thử thanh toán lại</h1>
 }
 else
 {
-    
-    <div class="card" style="width: 18rem;">
+    <div class="card m-auto" style="width: 18rem;">
         <form asp-action="Check">
-        <img src="/images/chipi.jpg" class="card-img-top" alt="Chicago Skyscrapers" />
+        <img src="/images/chipi.jpg" class="card-img-top" alt="image thanks you buy product" />
         <div class="card-body">
             <h5 class="card-title">Thanh toán thành công</h5>
             <p class="card-text">Chúng tôi hy vọng bạn đã có những trải nghiệm tuyệt vời với Innerglow.

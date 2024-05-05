@@ -127,7 +127,7 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Controllers
             if (Int16.Parse(rErrorCode) == 0)
             {
                 string address = HttpContext.Session.GetString("Address");
-                string number = HttpContext.Session.GetString("Number"); 
+                string number = HttpContext.Session.GetString("Number");
                 string notes = HttpContext.Session.GetString("Notes");
                 var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
                 await _emailSender.SendEmailAsync(user.Email, "Đơn hàng của bạn đã nhập đủ thông tin vui lòng tiếp tuc thanh toán",
@@ -142,6 +142,7 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Controllers
             return View(succeed);
         }
         
+
         public async Task<ActionResult> ConfirmPaymentClient()
         {
             return View();
