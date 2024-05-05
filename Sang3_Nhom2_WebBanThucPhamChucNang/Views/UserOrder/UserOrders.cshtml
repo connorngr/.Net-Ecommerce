@@ -1,74 +1,116 @@
 ﻿@model IEnumerable<Order>
+
 @{
     ViewData["Title"] = "GetUserCart";
 }
 
-<div style="width:90%;margin:auto" class="mt-2">
-        <h5>My Orders</h5>
-        @if (Model != null && Model.Count() > 0)
-        {
-            <table class="table table-striped">
-                <tr>
-                    <th>OrderDate</th>
-                    <th>OrderStatus</th>
-                </tr>
-                @foreach (var order in Model)
-                {
-                    <tr>
-                        <td>@order.OrderDate.ToString("dd-MM-yyyy")</td>
-                        <td>@order.OrderStatus.StatusName</td>
-                    </tr>
-                    @if (order.OrderDetail != null && order.OrderDetail.Count > 0)
-                    {
-                        <tr>
-                            <td>
-                                <table class="table table-striped">
-                                    <tr>
-                                        <td>
-                                            Total:
-                                        </td>
-                                        <td>
-                                            @(order.OrderDetail.Select(item => item.Product.Price * item.Quantity).Sum())
+@if (Model != null && Model.Count() > 0)
+{
+<section class="h-100 gradient-custom" style="background-color:rgb(13 110 253);">
+        
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-10 col-xl-8">
+                <div class="card" style="border-radius: 10px;">
+                    <div class="card-header px-4 py-5">
+                        <h5 class="text-muted mb-0">Cám ơn đã đặt hàng, <span style="color: rgb(13 110 253);">
+                        LHL
+                        </span>!</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <p class="lead fw-normal mb-0" style="color: #a8729a;">Đơn hàng</p>
+                        </div>
+                    </div>
+                        @foreach (var order in Model)
+                        {
+                            @if (order.OrderDetail != null && order.OrderDetail.Count > 0)
+                            {
+                            <div class="card-body p-4">
+                            
+                            @foreach (var item in order.OrderDetail)
+                            {
+                            <div class="card shadow-0 border mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            @if (string.IsNullOrEmpty(item.Product.Img_Url))
+                                            {
+                                                <img src="/images/NoImage.png" class="img-fluid" alt="image erorr" />
+                                            }
+                                            else
+                                            {
+                                                <img src="/images/@item.Product.Img_Url" class="img-fluid" alt="image erorr" />
+                                            }
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0">@item.Product.ProductName</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">Loại: @item.Product.Category.CategoryName</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">Đơn giá: @item.Product.Price</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">Số lượng: @item.Quantity</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0 small">$@(order.OrderDetail.Select(item => item.Product.Price * item.Quantity).Sum())</p>
+                                        </div>
+                                    </div>
+                                    <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-2">
+                                            <p class="text-muted mb-0 small">Ngày đặt hàng</p>
+                                            <p class="text-muted mb-0 small">@order.OrderDate.ToString("dd-MM-yyyy")</p>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="progress" style="height: 6px; border-radius: 16px;">
+                                                <div class="progress-bar" role="progressbar"
+                                                style="width: 65%; border-radius: 16px; background-color: rgb(13 110 253);" aria-valuenow="65"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="d-flex justify-content-around mb-1">
+                                                <p class="text-muted mt-1 mb-0 small ms-xl-5">@order.OrderStatus.StatusName</p>
+                                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Đã giao hàng</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                            
 
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Image</th>
-                                        <th>Genre</th>
-                                        <th>Unit Price</th>
-                                        <th>Total Price</th>
-                                    </tr>
-                                    @foreach (var item in order.OrderDetail)
-                                    {
-                                        <tr>
-                                            <td>@item.Product.ProductName</td>
-                                            <td>
-                                                @if (string.IsNullOrEmpty(item.Product.Img_Url))
-                                                {
-                                                    <img src="/images/NoImage.png" style="width:80px;height:100px" />
-                                                }
-                                                else
-                                                {
-                                                    <img src="/images/@item.Product.Img_Url" style="width:80px;height:100px" />
-                                                }
-                                            </td>
-                                            <td>@item.Product.Category.CategoryName</td>
-                                            <td>@item.Product.Price X @item.Quantity</td>
-                                            <td> @(item.Product.Price * item.Quantity) </td>
-                                        </tr>
-                                    }
-                                </table>
-                            </td>
-                        </tr>
-                    }
-                }
-            </table>
-       
-            }
-    else
-    {
-        <h5>Order is empty</h5>
-    }
-</div>
+                            <div class="d-flex justify-content-between pt-2">
+                                <p class="fw-bold mb-0">Chi tiết đơn hàng</p>
+                                <p class="text-muted mb-0"><span class="fw-bold me-4">Tổng: </span> $@(order.OrderDetail.Sum(item => item.Product.Price * item.Quantity))</p>
+                            </div>
+                            <div class="d-flex justify-content-between pt-2">
+                                <p class="text-muted mb-0">Mã số đơn: </p>
+                                <p class="text-muted mb-0"><span class="fw-bold me-4">Giảm giá </span>$0</p>
+                            </div>
+
+                        </div>
+                        <div class="card-footer border-0 px-4 py-5"
+                        style="background-color:rgb(13 110 253);border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                            <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
+                                Tổng tiền trả: <span class="h2 mb-0 ms-2">$@(order.OrderDetail.Sum(item => item.Product.Price * item.Quantity))</span>
+                            </h5>
+                        </div>
+                        }
+                        }
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+}
+else
+{
+    <h5>Order is empty</h5>
+}
+
 

@@ -119,6 +119,7 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Repositories
             }
             return totalAmount;
         }
+        
         public async Task<bool> DoCheckout(string address, string number, string notes)
         {
             using var transaction = _db.Database.BeginTransaction();

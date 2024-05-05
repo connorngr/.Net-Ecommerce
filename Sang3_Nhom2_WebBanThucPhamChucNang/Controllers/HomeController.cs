@@ -11,10 +11,14 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHomeRepository _homeRepository;
-        public HomeController(ILogger<HomeController> logger, IHomeRepository homeRepository)
+        private readonly IProductRepository _productRepository;
+        public HomeController(ILogger<HomeController> logger, IHomeRepository homeRepository,
+            IProductRepository productRepository)
         {
             _homeRepository = homeRepository;
             _logger = logger;
+            _productRepository = productRepository;
+
         }
 
         public async Task<IActionResult> Index(string Search="", int CategoryID = 0)
@@ -30,7 +34,17 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Controllers
             };
             return View(productDisplayModel);
         }
-        
+
+        public async Task<IActionResult> Display(int id)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
         /* public IActionResult Privacy()
          {
              return View();

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sang3_Nhom2_WebBanThucPhamChucNang.Migrations
 {
     /// <inheritdoc />
-    public partial class lastDB : Migration
+    public partial class AddTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

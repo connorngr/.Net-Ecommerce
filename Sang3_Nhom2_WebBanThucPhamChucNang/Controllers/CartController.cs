@@ -19,6 +19,7 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserManager<User> _userManager;
+
         public CartController(IHttpContextAccessor httpContextAccessor, ICartRepository cartRepo, ILogger<CartRepository> logger, IEmailSender emailSender, UserManager<User> userManager) 
         { 
             _cartRepo = cartRepo;
@@ -66,7 +67,7 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Controllers
             string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
 
             string orderInfo = "Innerglow payment";
-            string returnUrl = "https://localhost:7163/Cart/ConfirmPaymentClient";
+            string returnUrl = "https://localhost:7163/Cart/Check";
             string notifyurl = "https://4c8d-2001-ee0-5045-50-58c1-b2ec-3123-740d.ap.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
             int price = await _cartRepo.GetTotalPrice();
             _logger.LogInformation(price.ToString());
@@ -115,7 +116,8 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Controllers
             return Redirect(jmessage.GetValue("payUrl").ToString());
             /*return true;*/
         }
-        public async Task<ActionResult> ConfirmPaymentClient(Result result)
+
+        public async Task<ActionResult> Check(Result result)
         {
             //lấy kết quả Momo trả về và hiển thị thông báo cho người dùng (có thể lấy dữ liệu ở đây cập nhật xuống db)
             string rErrorCode = result.errorCode; // = 0: thanh toán thành công
@@ -124,22 +126,36 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Controllers
             _logger.LogInformation("abc" + rErrorCode);
             if (Int16.Parse(rErrorCode) == 0)
             {
+                string address = HttpContext.Session.GetString("Address");
+                string number = HttpContext.Session.GetString("Number"); 
+                string notes = HttpContext.Session.GetString("Notes");
+                var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+                await _emailSender.SendEmailAsync(user.Email, "Đơn hàng của bạn đã nhập đủ thông tin vui lòng tiếp tuc thanh toán",
+                            $"Sau khi thanh toán thành công bạn vui lòng xem thông tin đơn hàng đã mua chi tiết ở mục đơn hàng" +
+                            $" <br/> Cám ơn bạn đã tin tưởng Innerglow chúng tôi.");
+                bool isCheckedOut = await _cartRepo.DoCheckout(address, number, notes);
+                if (!isCheckedOut)
+                    throw new Exception("Something happen in server side");
+                _logger.LogInformation(address);
                 succeed = true;
             }
             return View(succeed);
+        }
+        
+        public async Task<ActionResult> ConfirmPaymentClient()
+        {
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> ConfirmPaymentClient(string address, string number, string notes)
         {
             //cập nhật dữ liệu vào db
-            var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-            await _emailSender.SendEmailAsync(user.Email, "Your order has been placed successfully",
-                        $"Your order has been sent to our system <br/> Thank you for your purchase.");
-            bool isCheckedOut = await _cartRepo.DoCheckout(address, number, notes);
-            if (!isCheckedOut)
-                throw new Exception("Something happen in server side");
-            _logger.LogInformation(address);
-            return RedirectToAction("UserOrders", "UserOrder");
+            HttpContext.Session.SetString("Address", address);
+            HttpContext.Session.SetString("Number", number);
+            HttpContext.Session.SetString("Notes", notes);
+
+            //RedirectToAction("UserOrders", "UserOrder");
+            return RedirectToAction("Checkout", "Cart", new { payment = true });
         }
     }
 }

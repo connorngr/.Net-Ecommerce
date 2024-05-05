@@ -12,8 +12,8 @@ using Sang3_Nhom2_WebBanThucPhamChucNang.Data;
 namespace Sang3_Nhom2_WebBanThucPhamChucNang.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20240412133812_lastDB")]
-    partial class lastDB
+    [Migration("20240422024409_AddTable")]
+    partial class AddTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model bool
+@{
+    ViewData["Title"] = "Check";
+}
+@if (Model == false)
+{
+    <h1>Bạn có thể thử thanh toán lại</h1>
+}
+else
+{
+    
+    <div class="card" style="width: 18rem;">
+        <form asp-action="Check">
+        <img src="/images/chipi.jpg" class="card-img-top" alt="Chicago Skyscrapers" />
+        <div class="card-body">
+            <h5 class="card-title">Thanh toán thành công</h5>
+            <p class="card-text">Chúng tôi hy vọng bạn đã có những trải nghiệm tuyệt vời với Innerglow.
+                Cảm ơn bạn đã lựa chọn Innerglow! Chúng tôi hy vọng bạn sẽ hài lòng với những gì bạn đang tìm kiếm.
+                Cảm ơn bạn vì sự tin tưởng
+            </p>
+        </div>
+        <ul class="list-group list-group-light list-group-small">
+            <a asp-controller="Home" asp-action="Index" style="color:black;text-decoration:none;">
+                <li class="list-group-item px-4">Xem sản phẩm tương tự</li>
+            </a>
+        </ul>
+        <div class="card-body">
+            <a asp-controller="UserOrder" asp-action="UserOrders" class="card-link" style="color:black;text-decoration:none;">Đơn hàng đã đặt</a>
+            <a asp-controller="Home" asp-action="Index" class="card-link" style="color:black;text-decoration:none;">Trở lại trang chủ</a>
+        </div>
+        </form>
+    </div>
+    
+}

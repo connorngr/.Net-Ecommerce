@@ -18,7 +18,7 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Identity.Data
             {
                 UserName = "admin123@gmail.com",
                 Email = "admin123@gmail.com",
-                FullName = "Lộc",
+                FullName = "Admin",
                 PhoneNumber = "0981020042",
                 EmailConfirmed = true
             };

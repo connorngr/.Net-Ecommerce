@@ -3,58 +3,91 @@
     ViewData["Title"] = "GetUserCart";
 }
 
-<div style="width:90%;margin:auto" class="mt-2">
-    @if (Model != null && Model.CartDetails != null && Model.CartDetails.Count > 0)
-    {
-        <h5>My Cart</h5>
 
-        <table class="table table-striped">
-            <tr>
-                <th>Book</th>
-                <th>Image</th>
-                <th>Genre</th>
-                <th>Unit Price</th>
-                <th>Total Price</th>
-                <th>Action</th>
-            </tr>
-            @foreach (var item in Model.CartDetails)
-            {
-                <tr>
-                    <td>@item.Product.ProductName</td>
-                    <td>
-                        @if (string.IsNullOrEmpty(item.Product.Img_Url))
-                        {
-                            <img src="/images/NoImage.png" style="width:80px;height:100px" />
-                        }
-                        else
-                        {
-                            <img src="/images/@item.Product.Img_Url" style="width:80px;height:100px" />
-                        }
-                    </td>
-                    <td>@item.Product.Category.CategoryName</td>
-                    <td>@item.Product.Price X @item.Quantity</td>
-                    <td>@(item.Product.Price * item.Quantity)</td>
-                    <td>
-                        <a class="btn btn-info" href="/Cart/AddItem?ProductId=@item.ProductId&&redirect=1">+</a>
-                        <a class="btn btn-info" href="/Cart/RemoveItem?ProductId=@item.ProductId">-</a>
-                    </td>
-                </tr>
-            }
-        </table>
+@if (Model != null && Model.CartDetails != null && Model.CartDetails.Count > 0)
+{
+<main class="page">
+    <section class="shopping-cart dark">
+        <div class="container">
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-12 col-lg-8">
+                        <div class="items">
+                                @foreach (var item in Model.CartDetails)
+                                {
+                                    <div class="product">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                @if (string.IsNullOrEmpty(item.Product.Img_Url))
+                                                {
+                                                    <img src="/images/NoImage.png" class="img-fluid mx-auto d-block image" style="width:80px;height:100px" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="/images/@item.Product.Img_Url" class="img-fluid mx-auto d-block image" style="width:80px;height:100px" />
+                                                }
+                                                
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="info">
+                                                    <div class="row">
+                                                        <div class="col-md-5 product-name">
+                                                            <div class="product-name">
+                                                                <a href="#">@item.Product.ProductName</a>
+                                                                <div class="product-info">
+                                                                    <div>Loại: <span class="value">@item.Product.Category.CategoryName</span></div>
+                                                                    <td>@item.Product.Price X @item.Quantity VND</td>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 quantity">
+                                                            <a class="btn btn-info" href="/Cart/AddItem?ProductId=@item.ProductId&&redirect=1">+</a>
+                                                            <a class="btn btn-info" href="/Cart/RemoveItem?ProductId=@item.ProductId">-</a>
+                                                        </div>
+                                                        <div class="col-md-3 price">
+                                                            <span><td>@(item.Product.Price * item.Quantity) VND</td></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-4">
+                        <div class="summary">
+                            <h3>Hóa đơn</h3>
+                            <div class="summary-item"><span class="text">Tổng phụ</span><span class="price">@(Model.CartDetails.Select(item => item.Product.Price * item.Quantity).Sum()) VND</span></div>
+                            <div class="summary-item"><span class="text">Giảm giá</span><span class="price">0 VND</span></div>
+                            <div class="summary-item"><span class="text">Vận chuyển</span><span class="price">0 VND</span></div>
+                            <div class="summary-item"><span class="text">Tổng</span><span class="price">@(Model.CartDetails.Select(item => item.Product.Price * item.Quantity).Sum()) VND</span></div>
 
-        <div class="my-2">
-            <h5>Total: </h5>
-            @(Model.CartDetails.Select(item => item.Product.Price * item.Quantity).Sum())
+                            <a style="color:black;text-decoration:none;" class="btn btn-primary btn-lg btn-block" asp-action="ConfirmPaymentClient">Thanh toán</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="my-2">
-            <a class="btn btn-primary" href="/Cart/Checkout">Checkout</a>
-        </div>
-
-    }
-    else
-    {
-        <h5>Cart is empty</h5>
-    }
-</div>
+    </section>
+</main>
+}
+else
+{
+    <main class="page">
+    <section class="shopping-cart dark">
+        <div class="container">
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-12 col-lg-8">
+                        <div class="items">
+                                <h5>Bạn chưa đặt đơn hàng nào</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </main>
+}
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Sang3_Nhom2_WebBanThucPhamChucNang.Repositories;
 
 namespace Sang3_Nhom2_WebBanThucPhamChucNang.Controllers
@@ -10,7 +11,7 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Controllers
         {
             _repository = repository;
         }
-
+        [Authorize]
         public async Task<IActionResult> UserOrders()
         {
             var UserOrders = await _repository.UserOrders();
