@@ -3,6 +3,9 @@ using Sang3_Nhom2_WebBanThucPhamChucNang.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using PagedList.Core;
+using Sang3_Nhom2_WebBanThucPhamChucNang.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Admin.Controllers
 {
@@ -12,19 +15,47 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Admin.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly UserContext _context;
         public ProductAdminController(IProductRepository productRepository,
 
-        ICategoryRepository categoryRepository)
+        ICategoryRepository categoryRepository, UserContext context)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _context = context;
         }
         // Hiển thị danh sách sản phẩm
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int page = 1, int CategoryID = 0)
         {
-            var products = await _productRepository.GetAllAsync();
-            return View(products);
+            var pageNumber = page;
+            var pageSize = 15;
+            List<Product> products = new List<Product>();
+            if (CategoryID != 0)
+            {
+                products = _context.Products.AsNoTracking().Where(x => x.CategoryId == CategoryID).Include(x => x.Category).OrderByDescending(x => x.Id).ToList();
+            }
+            else
+            {
+                products = _context.Products.AsNoTracking().Include(x => x.Category).OrderByDescending(x => x.Id).ToList();
+            }
+            ViewBag.CurrentCate = CategoryID;
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "CategoryName", CategoryID);
+
+            PagedList<Product> product = new PagedList<Product>(products.AsQueryable(), pageNumber, pageSize);
+
+            return View(product);
         }
+
+        public IActionResult Filtter(int CategoryID = 0)
+        {
+            var url = $"/Admin/ProductAdmin?CategoryID={CategoryID}";
+            if (CategoryID == 0)
+            {
+                url = $"/Admin/ProductAdmin";
+            }
+            return Json(new { status = "success", redirectUrl = url });
+        }
+
         // Hiển thị form thêm sản phẩm mới
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add()
@@ -35,14 +66,14 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Admin.Controllers
         }
         // Xử lý thêm sản phẩm mới
         [HttpPost]
-        public async Task<IActionResult> Add(Product product, IFormFile imageUrl)
+        public async Task<IActionResult> Add(Product product, IFormFile Img_Url)
         {
             if (!ModelState.IsValid)
             {
-                if (imageUrl != null)
+                if (Img_Url != null)
                 {
                     // Lưu hình ảnh đại diện tham khảo bài 02 hàm SaveImage
-                    product.Img_Url = await SaveImage(imageUrl);
+                    product.Img_Url = await SaveImage(Img_Url);
                 }
                 await _productRepository.AddAsync(product);
                 return RedirectToAction(nameof(Index));

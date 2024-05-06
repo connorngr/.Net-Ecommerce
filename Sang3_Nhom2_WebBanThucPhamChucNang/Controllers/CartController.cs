@@ -130,8 +130,8 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Controllers
                 string number = HttpContext.Session.GetString("Number");
                 string notes = HttpContext.Session.GetString("Notes");
                 var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-                await _emailSender.SendEmailAsync(user.Email, "Đơn hàng của bạn đã nhập đủ thông tin vui lòng tiếp tuc thanh toán",
-                            $"Sau khi thanh toán thành công bạn vui lòng xem thông tin đơn hàng đã mua chi tiết ở mục đơn hàng" +
+                await _emailSender.SendEmailAsync(user.Email, "Đơn hàng của bạn đã nhập đủ thông tin và thanh toán thành công",
+                            $"Khi bạn nhận được email này nghĩa là đơn hàng của bạn đã được xác nhận vui lòng xem tiến trình giao hàng trên web" +
                             $" <br/> Cám ơn bạn đã tin tưởng Innerglow chúng tôi.");
                 bool isCheckedOut = await _cartRepo.DoCheckout(address, number, notes);
                 if (!isCheckedOut)

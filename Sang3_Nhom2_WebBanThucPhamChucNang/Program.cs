@@ -5,6 +5,7 @@ using Sang3_Nhom2_WebBanThucPhamChucNang.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Sang3_Nhom2_WebBanThucPhamChucNang.Services;
 using Sang3_Nhom2_WebBanThucPhamChucNang.Repositories;
+using AspNetCoreHero.ToastNotification;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +38,9 @@ builder.Services
     .AddDefaultTokenProviders();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 3; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddTransient<IHomeRepository, HomeRepository>();
@@ -81,9 +84,9 @@ app.MapRazorPages();
 
 app.UseEndpoints(endpoints =>
 {
-    _ = endpoints.MapControllerRoute(
+    endpoints.MapControllerRoute(
       name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+      pattern: "{area:exists}/{controller=ProductAdmin}/{action=Index}/{id?}"
     );
 });
 

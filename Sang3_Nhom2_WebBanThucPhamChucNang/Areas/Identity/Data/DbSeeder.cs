@@ -20,7 +20,9 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Identity.Data
                 Email = "admin123@gmail.com",
                 FullName = "Admin",
                 PhoneNumber = "0981020042",
+                LockoutEnabled = false,
                 EmailConfirmed = true
+
             };
 
             var userInDb = await userMgr.FindByEmailAsync(admin.Email);

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Employee")]
     public class CategoryAdminController : Controller
     {
         private readonly IProductRepository _productRepository;
@@ -23,12 +23,14 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Admin.Controllers
             _categoryRepository = categoryRepository;
             _context = context;
         }
+        
         public async Task<IActionResult> Index()
         {
             var category = await _categoryRepository.GetAllAsync();
             return View(category);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Add()
         {
             return View();
@@ -63,6 +65,7 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
             /*return View(category);*/
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var category = await _categoryRepository.GetByIdAsync(id);

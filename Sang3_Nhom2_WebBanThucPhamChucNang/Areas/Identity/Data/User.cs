@@ -15,5 +15,6 @@ public class User : IdentityUser
     public string? FullName { get; set; }
     [NotMapped]
     public string Role { get; set; }
+    public bool isLooked { get; set; }
 }
 

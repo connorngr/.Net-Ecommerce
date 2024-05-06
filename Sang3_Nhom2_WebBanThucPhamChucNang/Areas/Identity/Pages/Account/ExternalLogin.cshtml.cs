@@ -79,6 +79,8 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            public string PhoneNumber { get; set; }
+            [Required]
             public string FullName { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -88,7 +90,7 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Identity.Pages.Account
             [EmailAddress]
             public string Email { get; set; }
         }
-        
+
         public IActionResult OnGet() => RedirectToPage("./Login");
 
         public IActionResult OnPost(string provider, string returnUrl = null)
@@ -156,6 +158,7 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
                 user.FullName = Input.FullName;
+                user.PhoneNumber = Input.PhoneNumber;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
@@ -166,7 +169,7 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Identity.Pages.Account
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
-
+                        await _userManager.AddToRoleAsync(user, "Customer");
                         var userId = await _userManager.GetUserIdAsync(user);
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

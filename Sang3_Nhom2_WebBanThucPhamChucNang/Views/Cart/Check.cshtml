@@ -9,18 +9,21 @@
 }
 else
 {
-    <div class="card m-auto" style="width: 18rem;">
+    <div class="card m-auto" style="width: 18rem; background-color:#c6ced9;">
         <form asp-action="Check">
         <img src="/images/chipi.jpg" class="card-img-top" alt="image thanks you buy product" />
         <div class="card-body">
             <h5 class="card-title">Thanh toán thành công</h5>
-            <p class="card-text">Chúng tôi hy vọng bạn đã có những trải nghiệm tuyệt vời với Innerglow.
+            <p class="card-text align-content-xl-center">Đơn hàng bạn đã được xác nhận vui lòng kiểm tra email.
+                <p class="align-content-xl-center">
+                Chúng tôi hy vọng bạn đã có những trải nghiệm tuyệt vời với Innerglow.
                 Cảm ơn bạn đã lựa chọn Innerglow! Chúng tôi hy vọng bạn sẽ hài lòng với những gì bạn đang tìm kiếm.
                 Cảm ơn bạn vì sự tin tưởng
+                </p>
             </p>
         </div>
         <ul class="list-group list-group-light list-group-small">
-            <a asp-controller="Home" asp-action="Index" style="color:black;text-decoration:none;">
+            <a asp-controller="Home" asp-action="Index" style="color:black;text-decoration:none;" class="m-auto">
                 <li class="list-group-item px-4">Xem sản phẩm tương tự</li>
             </a>
         </ul>
