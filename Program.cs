@@ -20,7 +20,7 @@ builder.Services.AddSession(options =>
 var connectionString = builder.Configuration.GetConnectionString("UserContextConnection") ?? throw new InvalidOperationException("Connection string 'UserContextConnection' not found.");
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
-builder.Services.AddDbContext<UserContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
 
 
@@ -30,8 +30,8 @@ builder.Services.AddDbContext<UserContext>(options => options.UseSqlServer(conne
     .AddEntityFrameworkStores<UserContext>();*/
 
 builder.Services
-    .AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<UserContext>()
+    .AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultUI()
     .AddDefaultTokenProviders();
 
@@ -82,7 +82,7 @@ app.UseEndpoints(endpoints =>
 {
     _ = endpoints.MapControllerRoute(
       name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+      pattern: "{area:exists}/{controller=ProductAdmin}/{action=Index}/{id?}"
     );
 });
 

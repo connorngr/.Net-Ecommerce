@@ -1,26 +1,39 @@
-﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityRole>;
 
 @{
-    ViewData["Title"] = "Change role by email";
+    ViewData["Title"] = "Index";
 }
-<h1>Change role by email</h1>
-<form asp-action="Index" method="post">
-    @Html.ValidationSummary()
-    <div class="form-group" class="col-12">
-        <label class="control-label">Email address</label>
-        <input type="email" id="email" name="email" placeholder="Account's email" class="form-control" required />
-    </div>
-    <div class="col-12">
-        <label class="visually-hidden" for="RoleName">Categories</label>
-        <select class="form-select" id="RoleName" name="RoleName">
-            <option selected>Choose...</option>
-            @foreach (var role in Model)
+
+<h1>Roles</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary mb-4">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            var i = 1;
+            foreach (var item in Model)
             {
-                <option value="@role.Name">@role.Name</option>
+                <tr id="trow_@item.Id">
+                    <td>@i</td>
+                    <td>@item.Name</td>
+                    <td>
+                        <a href="/admin/roleadmin/Edit/@item.Id" class="btn btn-warning">Sửa</a>
+                        <a href="/admin/roleadmin/Delete/@item.Id" class="btn btn-danger">Xóa</a>
+                    </td>
+                </tr>
+                i++;
             }
-        </select>
-    </div>
-    <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-    </div>
-</form>
+        }
+    </tbody>
+</table>

@@ -8,9 +8,9 @@ namespace WebApp.Repositories
 {
     public class HomeRepository : IHomeRepository
     {
-        private readonly UserContext _db;
+        private readonly ApplicationDbContext _db;
 
-        public HomeRepository(UserContext db)
+        public HomeRepository(ApplicationDbContext db)
         {
             _db = db;
         }

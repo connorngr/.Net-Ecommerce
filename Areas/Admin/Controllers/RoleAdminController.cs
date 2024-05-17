@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+
+﻿using WebApp.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApp.Areas.Identity.Data;
-using WebApp.Data;
-using WebApp.Repositories;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -14,46 +12,150 @@ namespace WebApp.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class RoleAdminController : Controller
     {
+<<<<<<< HEAD
         /*private readonly IRoleRepository _roleRepository;*/
         /*public RoleAdminController(IRoleRepository roleRepository)
         {
-            _roleRepository = roleRepository;
-        }*/
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly UserManager<User> _userManager;
-        public RoleAdminController(RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
-        {
-            this.roleManager = roleManager;
-            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
-        /*public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
-            var roles = roleManager.Roles.ToList();
+            var roles = _roleManager.Roles.ToList();
             return View(roles);
         }
-        [HttpPost]*/
-        public async Task<IActionResult> Index(string? email, string? RoleName)
-        {
-            try
-            {
-                var user = await _userManager.FindByEmailAsync(email);
-                if (user == null)
-                {
-                    ModelState.AddModelError("", "Email not found!");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Add successfully");
-                    await _userManager.AddToRoleAsync(user, RoleName);
-                }
-            }
-            catch (Exception ex)
-            {
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(IdentityRole model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _roleManager.CreateAsync(model);
+                return RedirectToAction("Index");
             }
-            var roles = roleManager.Roles.ToList();
+            return View(model);
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+            return View(role);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, IdentityRole model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                var role = await _roleManager.FindByIdAsync(id);
+                role.Name = model.Name;
+                await _roleManager.UpdateAsync(role);
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+            return View(role);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var user = await _roleManager.FindByIdAsync(id);
+            await _roleManager.DeleteAsync(user);
+            return RedirectToAction("Index");
+        }
+=======
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        public RoleAdminController(RoleManager<IdentityRole> roleManager)
+        {
+            _roleManager = roleManager;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var roles = _roleManager.Roles.ToList();
             return View(roles);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(IdentityRole model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _roleManager.CreateAsync(model);
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+            return View(role);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, IdentityRole model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                var role = await _roleManager.FindByIdAsync(id);
+                role.Name = model.Name;
+                await _roleManager.UpdateAsync(role);
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+            return View(role);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var user = await _roleManager.FindByIdAsync(id);
+            await _roleManager.DeleteAsync(user);
+            return RedirectToAction("Index");
+        }
+
+>>>>>>> 03e338b7c8e2f4659f04615125a2981909e1bc27
     }
 }

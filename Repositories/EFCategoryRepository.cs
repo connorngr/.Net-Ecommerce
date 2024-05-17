@@ -6,8 +6,8 @@ namespace WebApp.Repositories
 {
     public class EFCategoryRepository : ICategoryRepository
     {
-        private readonly UserContext _context;
-        public EFCategoryRepository(UserContext context)
+        private readonly ApplicationDbContext _context;
+        public EFCategoryRepository(ApplicationDbContext context)
         {
             _context = context;
         }
