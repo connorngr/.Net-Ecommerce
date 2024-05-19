@@ -20,8 +20,8 @@ namespace WebApp.Controllers
         private readonly ILogger _logger;
         private readonly IEmailSender _emailSender;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserManager<User> _userManager;
-        public CartController(IHttpContextAccessor httpContextAccessor, ICartRepository cartRepo, ILogger<CartRepository> logger, IEmailSender emailSender, UserManager<User> userManager) 
+        private readonly UserManager<ApplicationUser> _userManager;
+        public CartController(IHttpContextAccessor httpContextAccessor, ICartRepository cartRepo, ILogger<CartRepository> logger, IEmailSender emailSender, UserManager<ApplicationUser> userManager) 
         { 
             _cartRepo = cartRepo;
             _logger = logger;
