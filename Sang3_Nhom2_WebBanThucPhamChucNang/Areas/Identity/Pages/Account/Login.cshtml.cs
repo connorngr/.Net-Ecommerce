@@ -114,20 +114,23 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
                     var user = await _userManager.FindByNameAsync(Input.Email);
                     if (user != null)
                     {
+                        _logger.LogInformation("Đăng nhập thành công.");
                         var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
                         var isEmployee = await _userManager.IsInRoleAsync(user, "Employee");
                         if (isAdmin || isEmployee)
                         {
+                            _logger.LogInformation("Người dùng là Admin/Nhân viên.");
                             return Redirect("/Admin/ProductAdmin/Index");
                         }
                     }
+                    _logger.LogInformation("Người dùng được xác thực.");
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -136,12 +139,12 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Areas.Identity.Pages.Account
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
+                    _logger.LogWarning("Tài khoản người dùng bị khóa.");
                     return RedirectToPage("./Lockout");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Thử đăng nhập không hợp lệ.");
                     return Page();
                 }
             }

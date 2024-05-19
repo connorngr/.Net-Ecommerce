@@ -31,5 +31,6 @@ public class UserContext : IdentityDbContext<User>
     public DbSet<OrderStatus> OrderStatus { get; set; }
     public DbSet<ShoppingCart> ShoppingCarts { get; set; }
     public DbSet<CartDetail> CartDetails { get; set; }
+    //public DbSet<DetailProduct> DetailProducts { get; set; }
 
 }

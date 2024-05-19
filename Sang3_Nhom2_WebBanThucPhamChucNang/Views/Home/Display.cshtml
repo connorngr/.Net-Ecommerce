@@ -15,9 +15,11 @@
                 <div class="small mb-1">SKU: @Model.Id</div>
                 <h1 class="display-5 fw-bolder">@Model.ProductName</h1>
                 <div class="fs-5 mb-5">
-                    <span>Price: @Model.Price VND</span>
+                    <span mr-5>Price: @Model.Discount VND</span>
+                    ->
+                    <span ml-5>@Model.Price VND</span>
                 </div>
-                <p class="lead">@Model.Description</p>
+                <p class="lead">@Html.Raw(Model.Description)</p>
                 <div class="d-flex">
                     
                     <button class="btn btn-outline-dark flex-shrink-0 mx" type="button" onclick="add(@Model.Id)">
@@ -29,6 +31,7 @@
                 </div>
             </div>
         </div>
+        <p>@Html.Raw(Model.DetailProduct)</p>
     </div>
 </section>
 @section Scripts

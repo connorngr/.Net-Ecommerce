@@ -7,13 +7,65 @@
     </ol>
 </nav>
 
-<h2>@Model.ProductName</h2>
-<div>
-    <h3>Price: @Model.Price</h3>
-    <p>@Model.Description</p>
-    @if (!string.IsNullOrEmpty(Model.Img_Url))
-    {
-        <img src="/images/@Model.Img_Url" alt="Product Image" style="max-width:200px;" />
-    }
-</div>
 <a class="btn btn-warning mt-2" asp-action="Index">Back to List</a>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6">
+                @if (!string.IsNullOrEmpty(Model.Img_Url))
+                {
+                    <img class="card-img-top mb-5 mb-md-0" src="/images/@Model.Img_Url" alt="Product Image" style="max-width:400px;" />
+                }
+
+            </div>
+            <div class="col-md-6">
+
+                <div class="small mb-1">Time change: @Model.Time</div>
+                <h1 class="display-5 fw-bolder">@Model.ProductName</h1>
+                <div class="fs-5 mb-5">
+                    <span mr-5>Price: @Model.Discount VND</span>
+                    ->
+                    <span ml-5>@Model.Price VND</span>
+                </div>
+                <p class="lead">@Model.Description</p>
+                <div class="d-flex">
+
+                    <button class="btn btn-outline-dark flex-shrink-0 mx" type="button" onclick="add(@Model.Id)">
+                        <i class="bi-cart-fill me-1"></i>
+                        Thêm giỏ hàng
+                    </button>
+
+                    <a class="btn btn-warning mx-2" asp-action="Index">Trở lại</a>
+                </div>
+            </div>
+        </div>
+        <p>@Html.Raw(Model.DetailProduct)</p>
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+        async function add(ProductId) {
+            var usernameEl = document.getElementById("manage");
+            if (usernameEl == null) {
+                window.location.href = "/Identity/Account/Login";
+                //var username=usernameEl.innerText;
+                //  if(username.length<1){
+                //      window.location.href="/Identity/Account/Login";
+                //  }
+            }
+            try {
+                var response = await fetch(`/Cart/AddItem?ProductId=${ProductId}`);
+                if (response.status == 200) {
+                    var result = await response.json();
+                    var cartCountEl = document.getElementById("cartCount");
+                    cartCountEl.innerHTML = result;
+                    window.location.href = "#cartCount";
+                }
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+    </script>
+}

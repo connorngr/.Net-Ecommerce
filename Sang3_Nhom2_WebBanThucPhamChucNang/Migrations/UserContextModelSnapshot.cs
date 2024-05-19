@@ -17,7 +17,7 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -380,6 +380,12 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DetailProduct")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Discount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Img_Url")
                         .HasColumnType("nvarchar(max)");
 
@@ -393,6 +399,9 @@ namespace Sang3_Nhom2_WebBanThucPhamChucNang.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

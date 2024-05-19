@@ -18,10 +18,13 @@
     <a class="btn btn-primary mb-4" asp-action="Add">Create New</a>
 </p>
 
-<select class="form-control" id="categoryId" name="categoryId" style="max-width: 180px" asp-items="@ViewBag.Categories">
-    <option disabled selected>Categories</option>
-    <option value="0">All</option>
-</select>
+<div style="display: flex; justify-content: space-between">
+    <select class="form-control" id="categoryId" name="categoryId" style="max-width: 180px" asp-items="@ViewBag.Categories">
+        <option disabled selected>Categories</option>
+        <option value="0">All</option>
+    </select>
+    <input id="keyword" name="keyword" class="form-control" type="text" placeholder="Search" />
+</div>
 
 <table class="table">
     <thead>
@@ -29,9 +32,7 @@
             <th>
                 ProductName
             </th>
-            <th>
-                Description
-            </th>
+            
             <th>
                 Quantity
             </th>
@@ -43,16 +44,16 @@
             </th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var item in Model)
+    <tbody id="records_table">
+        @if (Model != null)
         {
+            foreach (var item in Model)
+            {
             <tr class="text-center">
                 <td>
                     @Html.DisplayFor(modelItem => item.ProductName)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
+                
                 <td>
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
@@ -60,6 +61,7 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
+                    @* @Html.Raw *@
                     @Html.DisplayFor(modelItem => item.Category.CategoryName)
                 </td>
                 <td>
@@ -68,7 +70,9 @@
                     <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
+            }
         }
+        
     </tbody>
 </table>
 <div>
@@ -98,6 +102,23 @@
                     },
                     error: function (xhr) {
                         alert('Error');
+                    }
+                });
+            });
+            $("#keyword").keyup(function () {
+                var strkeyword = $('#keyword').val();
+                $.ajax({
+                    url: '/Admin/Search/FindProduct',
+                    datatype: "json",
+                    type: "POST",
+                    data: { keyword: strkeyword },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert("Error");
                     }
                 });
             });
