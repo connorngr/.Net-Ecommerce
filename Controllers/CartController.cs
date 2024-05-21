@@ -1,6 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Net;
@@ -16,12 +14,8 @@ namespace Innerglow_App.Controllers
     {
         private readonly ICartRepository _cartRepo;
         private readonly ILogger _logger;
-        private readonly IEmailSender _emailSender;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserManager<User> _userManager;
-
-        public CartController(IHttpContextAccessor httpContextAccessor, ICartRepository cartRepo, ILogger<CartRepository> logger, IEmailSender emailSender, UserManager<User> userManager)
-        {
+        public CartController(ICartRepository cartRepo, ILogger<CartRepository> logger) 
+        { 
             _cartRepo = cartRepo;
             _logger = logger;
             _emailSender = emailSender;
@@ -153,11 +147,12 @@ namespace Innerglow_App.Controllers
         public async Task<IActionResult> ConfirmPaymentClient(string address, string number, string notes)
         {
             //cập nhật dữ liệu vào db
-            HttpContext.Session.SetString("Address", address);
-            HttpContext.Session.SetString("Number", number);
-            HttpContext.Session.SetString("Notes", notes);
-            //RedirectToAction("UserOrders", "UserOrder");
-            return RedirectToAction("Checkout", "Cart", new { payment = true });
+            String a = "";
+            bool isCheckedOut = await _cartRepo.DoCheckout(address, number, notes);
+            if (!isCheckedOut)
+                throw new Exception("Something happen in server side");
+            _logger.LogInformation(address);
+            return RedirectToAction("UserOrders", "UserOrder");
         }
     }
 }
