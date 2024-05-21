@@ -1,4 +1,4 @@
-﻿namespace WebApp.Services;
+﻿namespace Innerglow_App.Services;
 
 public class AuthMessageSenderOptions
 {

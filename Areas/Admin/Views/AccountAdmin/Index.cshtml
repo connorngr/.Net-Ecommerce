@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApp.Areas.Identity.Data.ApplicationUser>
+﻿@model IEnumerable<Innerglow_App.Areas.Identity.Data.User>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,6 +9,12 @@
 <p>
     <a asp-action="Add" class="btn btn-primary mb-4">Create New</a>
 </p>
+
+<select class="form-control" id="roleId" style="max-width: 180px" asp-items="@ViewBag.Role">
+    <option disabled selected>Role</option>
+    <option value="0">All</option>
+</select>
+
 <table class="table">
     <thead>
         <tr class="text-center">
@@ -24,29 +30,67 @@
             <th>
                 @Html.DisplayNameFor(model => model.Role)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr class="text-center">
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                    @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FullName)
+                    @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Role)
+                    @Html.DisplayFor(modelItem => item.Role)
             </td>
             <td>
+                    @if (item.isLooked)
+                    {
+                        <a href="@Url.Action("Unlock", "AccountAdmin", new { userId = item.Id })" class="btn btn-primary">Mở Khóa</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Lock", "AccountAdmin", new { userId = item.Id })" class="btn btn-danger">Khóa</a>
+                    }
                     <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id">Edit</a>
+
                     <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            jQuery("#roleId").change(function () {
+                var roleID = jQuery(this).children(":selected").attr("value");
+                roleID = parseFloat(roleID);
+                $("#roleId option").removeAttr("selected");
+                $("#roleId > [value = " + roleID + "]").attr("selected", "true");
+                $ajax({
+                    url: '/Admin/AccountAdmin/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        RoleID = roleID
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('Error');
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text;
 
-namespace WebApp.Services
+namespace Innerglow_App.Services
 {
     public class PaymentRequest
     {

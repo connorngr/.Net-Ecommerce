@@ -1,59 +1,128 @@
-﻿@model IEnumerable<WebApp.Models.Product>
+﻿@model PagedList.Core.IPagedList<Product>
+@using PagedList.Core.Mvc;
+    using Innerglow_App.Models;
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Products</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Product</a></li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Index</li>
+    </ol>
+</nav>
+
+<h2>Products</h2>
 
 <p>
-    <a class="btn btn-primary mb-4" asp-action="Create">Create New</a>
+    <a class="btn btn-primary mb-4" asp-action="Add">Create New</a>
 </p>
+
+<div style="display: flex; justify-content: space-between">
+    <select class="form-control" id="categoryId" name="categoryId" style="max-width: 180px" asp-items="@ViewBag.Categories">
+        <option disabled selected>Categories</option>
+        <option value="0">All</option>
+    </select>
+    <input id="keyword" name="keyword" class="form-control" type="text" placeholder="Search" />
+</div>
+
 <table class="table">
     <thead>
         <tr class="text-center">
             <th>
-                @Html.DisplayNameFor(model => model.ProductName)
+                ProductName
+            </th>
+            
+            <th>
+                Quantity
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Price
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                Category
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr class="text-center">
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
-            </td>
-            <td>
-                <a class="btn btn-success" asp-action="Display" asp-route-id="@item.Id">View</a>
-                <a class="btn btn-warning" asp-action="Update" asp-route-id="@item.Id">Edit</a>
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+    <tbody id="records_table">
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+            <tr class="text-center">
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @* @Html.Raw *@
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    <a class="btn btn-success" asp-action="Display" asp-route-id="@item.Id">View</a>
+                    <a class="btn btn-warning" asp-action="Update" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+            }
+        }
+        
     </tbody>
 </table>
+<div>
+    <pager list="@Model" asp-area="Admin" asp-controller="ProductAdmin" asp-route-CategoryID="@ViewBag.CurrentCate" asp-action="Index" />
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            jQuery("#categoryId").change(function () {
+                var categoryID = jQuery(this).children(":selected").attr("value");
+                categoryID = parseFloat(categoryID);
+                $('#categoryId option').removeAttr('selected');
+                $("#categoryId > [value = " + categoryID + "]").attr("selected", "true");
+                $.ajax({
+                    url: '/Admin/ProductAdmin/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        CategoryID: categoryID
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('Error');
+                    }
+                });
+            });
+            $("#keyword").keyup(function () {
+                var strkeyword = $('#keyword').val();
+                $.ajax({
+                    url: '/Admin/Search/FindProduct',
+                    datatype: "json",
+                    type: "POST",
+                    data: { keyword: strkeyword },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert("Error");
+                    }
+                });
+            });
+        });
+    </script>
+}

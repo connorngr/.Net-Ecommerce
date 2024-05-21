@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApp.Data;
+using Innerglow_App.Data;
 
 #nullable disable
 
-namespace WebApp.Migrations
+namespace Innerglow_App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -155,7 +155,7 @@ namespace WebApp.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WebApp.Areas.Identity.Data.ApplicationUser", b =>
+            modelBuilder.Entity("Innerglow_App.Areas.Identity.Data.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -224,7 +224,7 @@ namespace WebApp.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("WebApp.Models.CartDetail", b =>
+            modelBuilder.Entity("Innerglow_App.Models.CartDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -253,7 +253,7 @@ namespace WebApp.Migrations
                     b.ToTable("CartDetail");
                 });
 
-            modelBuilder.Entity("WebApp.Models.Category", b =>
+            modelBuilder.Entity("Innerglow_App.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -271,7 +271,7 @@ namespace WebApp.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("WebApp.Models.Order", b =>
+            modelBuilder.Entity("Innerglow_App.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -313,7 +313,7 @@ namespace WebApp.Migrations
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("WebApp.Models.OrderDetail", b =>
+            modelBuilder.Entity("Innerglow_App.Models.OrderDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -342,7 +342,7 @@ namespace WebApp.Migrations
                     b.ToTable("OrderDetail");
                 });
 
-            modelBuilder.Entity("WebApp.Models.OrderStatus", b =>
+            modelBuilder.Entity("Innerglow_App.Models.OrderStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -362,7 +362,7 @@ namespace WebApp.Migrations
                     b.ToTable("OrderStatus");
                 });
 
-            modelBuilder.Entity("WebApp.Models.Product", b =>
+            modelBuilder.Entity("Innerglow_App.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -398,7 +398,7 @@ namespace WebApp.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("WebApp.Models.ShoppingCart", b =>
+            modelBuilder.Entity("Innerglow_App.Models.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -429,7 +429,7 @@ namespace WebApp.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("WebApp.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("Innerglow_App.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -438,7 +438,7 @@ namespace WebApp.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("WebApp.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("Innerglow_App.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -453,7 +453,7 @@ namespace WebApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApp.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("Innerglow_App.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -462,22 +462,22 @@ namespace WebApp.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("WebApp.Areas.Identity.Data.ApplicationUser", null)
+                    b.HasOne("Innerglow_App.Areas.Identity.Data.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebApp.Models.CartDetail", b =>
+            modelBuilder.Entity("Innerglow_App.Models.CartDetail", b =>
                 {
-                    b.HasOne("WebApp.Models.Product", "Product")
+                    b.HasOne("Innerglow_App.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApp.Models.ShoppingCart", "ShoppingCart")
+                    b.HasOne("Innerglow_App.Models.ShoppingCart", "ShoppingCart")
                         .WithMany("CartDetails")
                         .HasForeignKey("ShoppingCartId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -488,15 +488,15 @@ namespace WebApp.Migrations
                     b.Navigation("ShoppingCart");
                 });
 
-            modelBuilder.Entity("WebApp.Models.Order", b =>
+            modelBuilder.Entity("Innerglow_App.Models.Order", b =>
                 {
-                    b.HasOne("WebApp.Models.OrderStatus", "OrderStatus")
+                    b.HasOne("Innerglow_App.Models.OrderStatus", "OrderStatus")
                         .WithMany()
                         .HasForeignKey("OrderStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApp.Areas.Identity.Data.ApplicationUser", "User")
+                    b.HasOne("Innerglow_App.Areas.Identity.Data.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -507,15 +507,15 @@ namespace WebApp.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WebApp.Models.OrderDetail", b =>
+            modelBuilder.Entity("Innerglow_App.Models.OrderDetail", b =>
                 {
-                    b.HasOne("WebApp.Models.Order", "Order")
+                    b.HasOne("Innerglow_App.Models.Order", "Order")
                         .WithMany("OrderDetail")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApp.Models.Product", "Product")
+                    b.HasOne("Innerglow_App.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -526,9 +526,9 @@ namespace WebApp.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("WebApp.Models.Product", b =>
+            modelBuilder.Entity("Innerglow_App.Models.Product", b =>
                 {
-                    b.HasOne("WebApp.Models.Category", "Category")
+                    b.HasOne("Innerglow_App.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -537,17 +537,17 @@ namespace WebApp.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("WebApp.Models.Category", b =>
+            modelBuilder.Entity("Innerglow_App.Models.Category", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("WebApp.Models.Order", b =>
+            modelBuilder.Entity("Innerglow_App.Models.Order", b =>
                 {
                     b.Navigation("OrderDetail");
                 });
 
-            modelBuilder.Entity("WebApp.Models.ShoppingCart", b =>
+            modelBuilder.Entity("Innerglow_App.Models.ShoppingCart", b =>
                 {
                     b.Navigation("CartDetails");
                 });

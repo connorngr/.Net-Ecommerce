@@ -1,6 +1,6 @@
-﻿using WebApp.Models;
+﻿using Innerglow_App.Models;
 
-namespace WebApp.Repositories
+namespace Innerglow_App.Repositories
 {
     public interface IHomeRepository
     {

@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  color: #000;
+  font-family: "poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #31d398;
+}
+
+.container {
+  width: 65%;
+  height: 550px;
+  background-color: #fff;
+  position: absolute;
+  box-shadow: 0 0 20px rgba(0, 0, 0, .4);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.item {
+  position: absolute;
+  width: 58%;
+  height: 100%;
+  background-color: #fff;
+  left: 15px;
+  top: 0;
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item .content {
+  position: relative;
+  height: 510px;
+  width: 510px;
+  background-color: #31d398;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.text-item {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  z-index: 999;
+  transform: translateY(-25%);
+}
+
+.text-item h2 {
+  font-size: 30px;
+}
+
+.text-item p{
+  font-size: 16px;
+}
+
+.social-icon button {
+  border: none;
+  background-color: #31d398;
+}
+
+.social-icon button i{
+  color: #000;
+  font-size: 24px;
+  margin-left: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: .5s ease;
+}
+
+.social-icon button:hover i{
+  transform: scale(1.2);
+}
+
+.login-section {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(100% - 58%);
+  height: 100%;
+}
+
+.form-box {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.form-box h2 {
+  margin-bottom: 10px;
+  font-size: 35px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.input-box {
+  height: 30px;
+  width: 70%;
+  border-bottom: 2px solid #888;
+  position: relative;
+  margin: 20px 0;
+}
+
+.input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding-right: 28px;
+  color: #888;
+}
+
+.input-box label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 15px;
+  font-weight: 400;
+  color: #888;
+  pointer-events: none;
+  transition: ease .5s;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  top: -7px;
+}
+
+.btn {
+  width: 100%;
+  height: 45px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  background: #000;
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+.account-login label {
+  color: #888;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.account-login label a {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.account-login label a:hover {
+  text-decoration: underline;
+}
+
+.swiper {
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #31d398;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+svg {
+  height: 300px;
+  width: 300px;
+  background: #31d398;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-section .form-box.Login {
+  transform: translateX(430px);
+  transition: transform .5s ease;
+  transition-delay: 0s;
+}
+
+.login-section.active .form-box.Login {
+  transform: translateX(0px);
+  transition-delay: 0s;
+}
+
+.login-section .form-box.Register {
+  transform: translateX(0px);
+  transition: transform .5s ease;
+  transition-delay: 0s;
+}
+
+.login-section.active .form-box.Register {
+  transform: translateX(430px);
+  transition-delay: 0s;
+}
+
+#registerForm, #loginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.text-danger {
+  font-size: 14px;
+}
+
+#forgot-password {
+  position: absolute;
+  right: 15%;
+  bottom: 38%;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+#forgot-password:hover {
+  text-decoration: underline;
+}

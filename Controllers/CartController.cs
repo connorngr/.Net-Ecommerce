@@ -1,24 +1,34 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Net;
-using WebApp.Models;
-using WebApp.Repositories;
-using WebApp.Services;
+using System.Text.Encodings.Web;
+using Innerglow_App.Services;
+using Innerglow_App.Areas.Identity.Data;
+using Innerglow_App.Models;
+using Innerglow_App.Repositories;
 
-namespace WebApp.Controllers
+namespace Innerglow_App.Controllers
 {
-    [Authorize]
     public class CartController : Controller
     {
         private readonly ICartRepository _cartRepo;
         private readonly ILogger _logger;
-        public CartController(ICartRepository cartRepo, ILogger<CartRepository> logger) 
-        { 
+        private readonly IEmailSender _emailSender;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserManager<User> _userManager;
+
+        public CartController(IHttpContextAccessor httpContextAccessor, ICartRepository cartRepo, ILogger<CartRepository> logger, IEmailSender emailSender, UserManager<User> userManager)
+        {
             _cartRepo = cartRepo;
             _logger = logger;
+            _emailSender = emailSender;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<IActionResult> AddItem(int ProductId, int Qty = 1, int redirect=0)
+        public async Task<IActionResult> AddItem(int ProductId, int Qty = 1, int redirect = 0)
         {
             var cartCount = await _cartRepo.AddItem(ProductId, Qty);
             if (redirect == 0)
@@ -57,9 +67,10 @@ namespace WebApp.Controllers
             string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
 
             string orderInfo = "Innerglow payment";
-            string returnUrl = "https://localhost:7163/Cart/ConfirmPaymentClient";
+            string returnUrl = "https://localhost:7163/Cart/Check";
             string notifyurl = "https://4c8d-2001-ee0-5045-50-58c1-b2ec-3123-740d.ap.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
             int price = await _cartRepo.GetTotalPrice();
+            _logger.LogInformation(price.ToString());
             string amount = price.ToString();//Số tiền cần thanh toán
             string orderid = DateTime.Now.Ticks.ToString(); //mã đơn hàng
             string requestId = DateTime.Now.Ticks.ToString(); //Định danh mỗi yêu cầu
@@ -105,29 +116,48 @@ namespace WebApp.Controllers
             return Redirect(jmessage.GetValue("payUrl").ToString());
             /*return true;*/
         }
-        public async Task<ActionResult> ConfirmPaymentClient(Result result)
+
+        public async Task<ActionResult> Check(Result result)
         {
             //lấy kết quả Momo trả về và hiển thị thông báo cho người dùng (có thể lấy dữ liệu ở đây cập nhật xuống db)
             string rErrorCode = result.errorCode; // = 0: thanh toán thành công
             bool succeed = false;
             //Huy: Bad
             _logger.LogInformation("abc" + rErrorCode);
-            if (Int16.Parse(rErrorCode) == 0)
+            if (short.Parse(rErrorCode) == 0)
             {
+                _logger.LogInformation(HttpContext.Session.GetString("Notes"));
+                string address = HttpContext.Session.GetString("Address");
+                string number = HttpContext.Session.GetString("Number");
+                string notes = HttpContext.Session.GetString("Notes");
+                _logger.LogInformation(notes + number + address);
+                var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+                await _emailSender.SendEmailAsync(user.Email, "Đơn hàng của bạn đã nhập đủ thông tin và thanh toán thành công",
+                            $"Khi bạn nhận được email này nghĩa là đơn hàng của bạn đã được xác nhận vui lòng xem tiến trình giao hàng trên web" +
+                            $" <br/> Cám ơn bạn đã tin tưởng Innerglow chúng tôi.");
+                bool isCheckedOut = await _cartRepo.DoCheckout(address, number, notes);
+                if (!isCheckedOut)
+                    throw new Exception("Something happen in server side");
+                _logger.LogInformation(address);
                 succeed = true;
             }
             return View(succeed);
+        }
+
+
+        public async Task<ActionResult> ConfirmPaymentClient()
+        {
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> ConfirmPaymentClient(string address, string number, string notes)
         {
             //cập nhật dữ liệu vào db
-            String a = "";
-            bool isCheckedOut = await _cartRepo.DoCheckout(address, number, notes);
-            if (!isCheckedOut)
-                throw new Exception("Something happen in server side");
-            _logger.LogInformation(address);
-            return RedirectToAction("UserOrders", "UserOrder");
+            HttpContext.Session.SetString("Address", address);
+            HttpContext.Session.SetString("Number", number);
+            HttpContext.Session.SetString("Notes", notes);
+            //RedirectToAction("UserOrders", "UserOrder");
+            return RedirectToAction("Checkout", "Cart", new { payment = true });
         }
     }
 }

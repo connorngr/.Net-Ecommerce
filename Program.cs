@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WebApp.Areas.Identity.Data;
-using WebApp.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using WebApp.Services;
-using WebApp.Repositories;
+using AspNetCoreHero.ToastNotification;
+using Innerglow_App.Repositories;
+using Innerglow_App.Services;
+using Innerglow_App.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,15 +12,17 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
 {
+
     options.IdleTimeout = TimeSpan.FromMinutes(30);//thời gian hết hạn
     options.Cookie.HttpOnly = true;//Cookie chỉ được truy cập bằng HTTP
     options.Cookie.IsEssential = true;//Cookie là bắt buộc cho phiên
 });
-
+builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("UserContextConnection") ?? throw new InvalidOperationException("Connection string 'UserContextConnection' not found.");
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<UserContext>(options => options.UseSqlServer(connectionString));
+
 
 
 
@@ -30,13 +32,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     .AddEntityFrameworkStores<UserContext>();*/
 
 builder.Services
-    .AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<UserContext>()
     .AddDefaultUI()
     .AddDefaultTokenProviders();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+
+/*builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();*/
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 3; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddTransient<IHomeRepository, HomeRepository>();
@@ -69,7 +73,6 @@ app.UseStaticFiles();
 
 app.UseSession();
 
-
 app.UseRouting();
 
 app.UseAuthentication();
@@ -89,4 +92,5 @@ app.UseEndpoints(endpoints =>
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.Run();

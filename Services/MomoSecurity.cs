@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace WebApp.Services
+namespace Innerglow_App.Services
 {
     public class MomoSecurity
     {

@@ -1,4 +1,4 @@
-namespace WebApp.Models
+namespace Innerglow_App.Models
 {
     public class ErrorViewModel
     {

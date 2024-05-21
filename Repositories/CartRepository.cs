@@ -4,20 +4,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using System.Net;
-using WebApp.Areas.Identity.Data;
-using WebApp.Data;
-using WebApp.Models;
-using WebApp.Services;
+using Innerglow_App.Areas.Identity.Data;
+using Innerglow_App.Models;
 
-namespace WebApp.Repositories
+namespace Innerglow_App.Repositories
 {
     public class CartRepository : ICartRepository
     {
-        private readonly ApplicationDbContext _db;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserContext _db;
+        private readonly UserManager<User> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger _logger;
-        public CartRepository(ApplicationDbContext db, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, ILogger<CartRepository> logger) 
+        public CartRepository(UserContext db, IHttpContextAccessor httpContextAccessor, UserManager<User> userManager, ILogger<CartRepository> logger)
         {
             _db = db;
             _userManager = userManager;
@@ -119,6 +117,7 @@ namespace WebApp.Repositories
             }
             return totalAmount;
         }
+
         public async Task<bool> DoCheckout(string address, string number, string notes)
         {
             using var transaction = _db.Database.BeginTransaction();
@@ -178,7 +177,7 @@ namespace WebApp.Repositories
                 return false;
             }
         }
-        
+
         public async Task<ShoppingCart> GetUserCart()
         {
             var userId = GetUserId();

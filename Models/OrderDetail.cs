@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebApp.Models
+namespace Innerglow_App.Models
 {
     [Table("OrderDetail")]
     public class OrderDetail

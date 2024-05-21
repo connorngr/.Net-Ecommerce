@@ -1,6 +1,6 @@
 ﻿using Humanizer.Localisation;
 
-namespace WebApp.Models
+namespace Innerglow_App.Models
 {
     public class ProductDisplayModel
     {

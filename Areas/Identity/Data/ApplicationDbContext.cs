@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using WebApp.Areas.Identity.Data;
-using WebApp.Models;
+using Innerglow_App.Areas.Identity.Data;
+using Innerglow_App.Models;
 
-namespace WebApp.Data;
+namespace Innerglow_App.Data;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+public class ApplicationDbContext : IdentityDbContext<User>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)

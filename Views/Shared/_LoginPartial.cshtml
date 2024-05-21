@@ -1,45 +1,46 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using WebApp.Areas.Identity.Data
+@using Innerglow_App.Areas.Identity.Data
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
-<ul class="navbar-nav">
-        
+    
 @if (SignInManager.IsSignedIn(User))
 {
-    
-        <li class="nav-item">
-            <a class="nav-link" href="/Cart/GetUserCart">
-                <span id="cartCount" class="badge text-bg-info text-black">0</span>
-                <i class="bi bi-cart text-white"></i>
-            </a>
-        </li>
-    <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" style="font-size: 16px; color: ##fff" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!
-                @if (User.IsInRole("Admin"))
-                {
-                    <span>(Admin)</span>
-                }
-                @if (User.IsInRole("Employee"))
-                {
-                    <span>(Employee)</span>
-                }
-            </a>
-    </li>
-    <li class="nav-item">
-        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
+    <a href="/Cart/GetUserCart" class="border rounded py-1 px-3 nav-link d-flex align-items-center" style="color:black;">
+        <i class="fas fa-shopping-cart m-1 me-md-2" ></i>
+        
+        <p class="d-none d-md-block mb-0">Giỏ hàng</p>
+        <span id="cartCount" class="badge text-bg-info text-black">0</span>
+    </a>
+    <a id="manage" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" style="color:black;">
+        <i class="fas fa-user-alt m-1 me-md-2"></i>
+        <p class="d-none d-md-block mb-0">
+            Cá nhân
+            @if (User.IsInRole("Admin")) @* @UserManager.GetUserName(User) *@
+            {
+                <span>(Admin)</span>
+            }
+            @if (User.IsInRole("Employee"))
+            {
+                <span>(Employee)</span>
+            }
+        </p>
+    </a>
+    @* class="d-none d-md-block mb-0 btn btn-light" *@
+    <form id="logoutForm"  asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <button id="logout" style="color:black;background-color:white;"  class="me-1 border rounded py-1 px-4 nav-link d-flex align-items-center" type="submit">Đăng xuất</button>
         </form>
-    </li>
+ 
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+    <a id="login" asp-area="Identity" asp-page="/Account/Login" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" style="color:black;">
+    <i class="fas fa-user-alt m-1 me-md-2"></i>
+            <p class="d-none d-md-block mb-0">Đăng nhập</p> 
+        </a>
+    <a id="register" asp-area="Identity" asp-page="/Account/Register" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" style="color:black;">
+        <p class="d-none d-md-block mb-0">Đăng ký</p>
+    </a>
 }
-</ul>
+

@@ -1,13 +1,13 @@
-﻿using WebApp.Models;
-using Microsoft.EntityFrameworkCore;
-using WebApp.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Innerglow_App.Areas.Identity.Data;
+using Innerglow_App.Models;
 
-namespace WebApp.Repositories
+namespace Innerglow_App.Repositories
 {
     public class EFCategoryRepository : ICategoryRepository
     {
-        private readonly ApplicationDbContext _context;
-        public EFCategoryRepository(ApplicationDbContext context)
+        private readonly UserContext _context;
+        public EFCategoryRepository(UserContext context)
         {
             _context = context;
         }

@@ -1,20 +1,19 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Innerglow_App.Areas.Identity.Data;
+using Innerglow_App.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WebApp.Areas.Identity.Data;
-using WebApp.Data;
-using WebApp.Models;
 
-namespace WebApp.Repositories
+namespace Innerglow_App.Repositories
 {
     public class UserOrderRepository : IUserOrderRepository
     {
-        private readonly ApplicationDbContext _db;
+        private readonly UserContext _db;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<User> _userManager;
 
 
-        public UserOrderRepository(ApplicationDbContext db,
-            UserManager<ApplicationUser> userManager,
+        public UserOrderRepository(UserContext db,
+            UserManager<User> userManager,
              IHttpContextAccessor httpContextAccessor)
         {
             _db = db;

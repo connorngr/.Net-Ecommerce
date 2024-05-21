@@ -1,8 +1,8 @@
-﻿using WebApp.Repositories;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Innerglow_App.Repositories;
 
-namespace WebApp.Areas.Admin.Controllers
+namespace Innerglow_App.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin, Employee")]

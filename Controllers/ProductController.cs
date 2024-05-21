@@ -1,9 +1,9 @@
-﻿using WebApp.Models;
-using WebApp.Repositories;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Innerglow_App.Repositories;
+using Innerglow_App.Models;
 
-namespace WebApp.Controllers
+namespace Innerglow_App.Controllers
 {
     public class ProductController : Controller
     {

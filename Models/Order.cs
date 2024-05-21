@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Numerics;
-using WebApp.Areas.Identity.Data;
+using Innerglow_App.Areas.Identity.Data;
 
-namespace WebApp.Models
+namespace Innerglow_App.Models
 {
     [Table("Order")]
     public class Order
-        
+
     {
         public int Id { get; set; }
         [Required]
@@ -22,7 +22,7 @@ namespace WebApp.Models
         public bool IsPaid { get; set; } = false;
         public OrderStatus OrderStatus { get; set; }
         public List<OrderDetail> OrderDetail { get; set; }
-        public ApplicationUser User { get; set; }
+        public User User { get; set; }
 
     }
 }

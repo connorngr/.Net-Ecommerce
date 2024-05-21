@@ -1,16 +1,16 @@
-﻿using WebApp.Models;
-using Microsoft.EntityFrameworkCore;
-using WebApp.Data;
-using WebApp.Areas.Identity.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Innerglow_App.Areas.Identity.Data;
+using Innerglow_App.Areas.Identity.Data;
+using Innerglow_App.Models;
 
-namespace WebApp.Repositories
+namespace Innerglow_App.Repositories
 {
-    
+
     public class EFOrderRepository : IOrderRepository
     {
-        public readonly ApplicationDbContext _context;
+        public readonly UserContext _context;
 
-        public EFOrderRepository(ApplicationDbContext context)
+        public EFOrderRepository(UserContext context)
         {
             _context = context;
         }

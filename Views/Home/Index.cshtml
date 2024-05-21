@@ -1,90 +1,106 @@
 ﻿@model ProductDisplayModel
-@{
 
+@{
+    ViewData["Title"] = "Index";
 }
-<div class="my-2 mt-3">
-    <form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center d-flex justify-content-center">
-        <div class="col-12">
-            <label class="visually-hidden" for="CategoryID">Genres</label>
-            <select class="form-select" id="CategoryID" name="CategoryID">
-                <option selected>Choose...</option>
+<div class="p-3 text-center">
+    <div class="container">
+<div class="col-lg-5 col-md-12 col-12">
+    <form asp-action="Index">
+        <div class="input-group float-center">
+            <label class="visually-hidden" for="CategoryID">Các loại sản phẩm</label>
+            <select class="form-select px-2" id="CategoryID" name="CategoryID">
+                <option selected>Chọn...</option>
                 @foreach (var category in Model.Categories)
                 {
                     <option selected="@(category.Id == Model.CategoryID)" value="@category.Id">@category.CategoryName</option>
                 }
             </select>
-        </div>
+            <div class="form-outline px-2">
 
-        <div class="col-12">
-            <label class="visually-hidden" for="Search">Search by title</label>
-            <div class="input-group">
-                <div class="input-group-text"></div>
-                <input type="text" class="form-control" value="@Model.Search" id="Search" name="Search" placeholder="Search by title">
+                <input type="search" id="Search" value="@Model.Search" class="form-control" name="Search" />
+                <label class="visually-hidden" for="Search">Tìm kiếm</label>
             </div>
-        </div>
-
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary">Search</button>
-            <a href="/Home/Index" class="btn btn-dark">Reset</a>
+            <button type="submit" class="btn btn-primary shadow-0">
+                <i class="fas fa-search"></i>
+            </button>
+            <a href="/Home/Index" class="btn btn-light shadow-0">
+                <i class="fas fa-reply-all"></i>
+            </a>
         </div>
     </form>
 </div>
-
-@* <div class="w-100 mt-4 d-flex flex-wrap ">
-    @foreach (var Product in Model.Products)
-    {
-        <div class="card mx-3 mb-4" style="width: 11rem;">
-            @if (string.IsNullOrEmpty(Product.Img_Url))
-            {
-                <img style="width:100%;height:180px" src="~/images/NoImage.png" class="card-img-top" alt="...">
-
-            }
-            else
-            {
-                <img style="width:100%;height:180px" src="~/images/@Product.Img_Url" class="card-img-top" alt="...">
-            }
-            <div class="card-body">
-                <h5 class="card-title">@Product.ProductName</h5>
-                <p class="card-text">
-                    <b>Category: </b>@Product.CategoryName <br />
-                    <b>Price: </b>@Product.Price
-                </p>
-                <button type="button" onclick="add(@Product.Id)" class="btn btn-primary">Add to cart</button>
-            </div>
+</div>
+</div>
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Giao hàng nhanh chóng</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Đặt hàng giao hàng 3 ngày</p>
         </div>
-    }
-</div> *@
+    </div>
+</header>
+
 <section class="py-5">
+
     <div class="container px-4 px-lg-5 mt-5">
+        <header class="mb-4">
+            <h3>Sản phẩm mới</h3>
+        </header>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="col mb-5">
-                <div class="card h-100">
-                    @foreach (var Product in Model.Products) {
-                    <!-- Product image-->
-                    <img class="card-img-top" src="~/images/@Product.Img_Url" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <h5 class="card-title">@Product.ProductName</h5>
-                        <p class="card-text">
-                            <b>Category: </b>@Product.CategoryName<br />
-                            <b>Price: </b>@Product.Price
-                        </p>
+            @foreach (var Product in Model.Products)
+            {
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <a asp-action="Display" asp-route-id="@Product.Id" class="img-wrap">
+                        <!-- Sale badge-->
+                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                        <!-- Product image-->
+                            @if (string.IsNullOrEmpty(Product.Img_Url))
+                            {
+                                <img class="card-img-top" style="width:224px;height:280px;" src="/images/NoImage.png" alt="...">
+
+                            }
+                            else
+                            {
+                                <img class="card-img-top" style="width:224px;height:280px;" src="/images/@Product.Img_Url" alt="...">
+                            }
+                        <!-- Product details-->
+                        </a>
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">@Product.ProductName</h5>
+                                <p class="fw-bolder">@Product.CategoryName</p>
+                                <!-- Product price-->
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                </div>
+                                <!-- Product price-->
+                                $@Product.Price
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <button type="button" onclick="add(@Product.Id)" class="btn btn-outline-dark mt-auto">Thêm giỏ hàng</button>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Product actions-->
-                    <div id="AddToCart" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                         <div onclick="add(@Product.Id) class="text-center"><a class="btn btn-outline-dark mt-auto">Add to cart</a></div>
-                    </div>
-                    }
                 </div>
-            </div>
+            }
         </div>
     </div>
 </section>
-
-@section Scripts{
+@section Scripts
+{
     <script>
         async function add(ProductId) {
-            var usernameEl = document.getElementById("AddToCart");
+            var usernameEl = document.getElementById("manage");
         if(usernameEl==null){
             window.location.href = "/Identity/Account/Login";
           //var username=usernameEl.innerText;

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;
 
-namespace WebApp.Services;
+namespace Innerglow_App.Services;
 
 public class EmailSender : IEmailSender
 {

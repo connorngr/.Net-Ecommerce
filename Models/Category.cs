@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebApp.Models
+namespace Innerglow_App.Models
 {
     [Table("Category")]
     public class Category

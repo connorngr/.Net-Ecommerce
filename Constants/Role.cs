@@ -1,4 +1,4 @@
-﻿namespace WebApp.Constants
+﻿namespace Innerglow_App.Constants
 {
     public enum Roles
     {

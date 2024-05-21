@@ -1,12 +1,18 @@
-﻿@model WebApp.Models.Product
+﻿@model             Product
 
 @{
     ViewData["Title"] = "Update";
 }
 
-<h1>Update</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Product</a></li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Edit</li>
+    </ol>
+</nav>
 
-<h4>Product</h4>
+<h2>Edit</h2>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,20 +24,25 @@
                 <input asp-for="ProductName" class="form-control" />
                 <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="Quantity" class="control-label"></label>
                 <input asp-for="Quantity" class="form-control" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Discount" class="control-label"></label>
+                <input asp-for="Discount" class="form-control" />
+                <span asp-validation-for="Discount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Img_Url" class="control-label"></label>
@@ -43,6 +54,11 @@
                      id="previewImage" />
             </div>
             <div class="form-group">
+                <label asp-for="DetailProduct" class="control-label"></label>
+                <textarea asp-for="DetailProduct" class="form-control" name="txtDetailProduct"></textarea>
+                <span asp-validation-for="DetailProduct" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
                 <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories"></select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
@@ -52,6 +68,7 @@
             </div>
             
             <script>
+                CKEDITOR.replace("txtDetailProduct");
                 document.querySelectorAll('input[type="file"]').forEach(input => {
                     input.addEventListener('change', function (event) {
                         const file = event.target.files[0];
