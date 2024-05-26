@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Innerglow_App.Areas.Identity.Data;
-using Innerglow_App.Areas.Identity.Data;
 using Innerglow_App.Models;
 
 namespace Innerglow_App.Repositories
@@ -24,6 +23,19 @@ namespace Innerglow_App.Repositories
             .ThenInclude(x => x.Category)
                             .ToListAsync();
             return orders;
+        }
+
+        public async Task<Order> GetByIdAsync(int id)
+        {
+            // return await _context.Products.FindAsync(id);
+            // lấy thông tin kèm theo category
+            return await _context.Orders.Include(p => p.OrderStatus).FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task UpdateAsync(Order product)
+        {
+            _context.Orders.Update(product);
+            await _context.SaveChangesAsync();
         }
     }
 }

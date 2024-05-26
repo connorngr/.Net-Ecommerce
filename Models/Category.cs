@@ -11,5 +11,7 @@ namespace Innerglow_App.Models
         [MaxLength(255)]
         public string CategoryName { get; set; }
         public List<Product> Products { get; set; }
+        public bool isDeleted { get; set; } = true;
+
     }
 }

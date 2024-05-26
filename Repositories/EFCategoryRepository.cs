@@ -14,7 +14,7 @@ namespace Innerglow_App.Repositories
         public async Task<IEnumerable<Category>> GetAllAsync()
         {
             // return await _context.Categories.ToListAsync();
-            return await _context.Categories.ToListAsync();
+            return await _context.Categories.Where(x => x.isDeleted == true).ToListAsync();
         }
         public async Task<Category> GetByIdAsync(int id)
         {
@@ -33,7 +33,7 @@ namespace Innerglow_App.Repositories
         public async Task DeleteAsync(int id)
         {
             var Category = await _context.Categories.FindAsync(id);
-            _context.Categories.Remove(Category);
+            Category.isDeleted = false;
             await _context.SaveChangesAsync();
         }
     }

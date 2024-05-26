@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Innerglow_App.Migrations
+namespace WebApp.Migrations
 {
     /// <inheritdoc />
-    public partial class abc : Migration
+    public partial class SoftDelete : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,7 +58,8 @@ namespace Innerglow_App.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                    CategoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    isDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -213,7 +214,8 @@ namespace Innerglow_App.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Img_Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DetailProduct = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    isDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

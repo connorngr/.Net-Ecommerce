@@ -31,5 +31,6 @@ namespace Innerglow_App.Models
 
         [NotMapped]
         public string CategoryName { get; set; }
+        public bool isDeleted { get; set; } = true;
     }
 }
