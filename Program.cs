@@ -5,6 +5,8 @@ using AspNetCoreHero.ToastNotification;
 using Innerglow_App.Repositories;
 using Innerglow_App.Services;
 using Innerglow_App.Areas.Identity.Data;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,10 +58,10 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 });
 var app = builder.Build();
 // Uncomment it when you run the project first time, It will registered an admin
-/*using (var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     await DbSeeder.SeedDefaultData(scope.ServiceProvider);
-}*/
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -71,6 +73,13 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(),"Uploads")
+        ),
+    RequestPath ="/contents"
+});
 app.UseSession();
 
 app.UseRouting();
@@ -85,8 +94,8 @@ app.UseEndpoints(endpoints =>
 {
     _ = endpoints.MapControllerRoute(
       name: "areas",
-      pattern: "{area:exists}/{controller=ProductAdmin}/{action=Index}/{id?}"
-    );
+      pattern: "{area:exists}/{controller=ProductAdmin}/{action=Index}/{id?}");
+
 });
 
 app.MapControllerRoute(

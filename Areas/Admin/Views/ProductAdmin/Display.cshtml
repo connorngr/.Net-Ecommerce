@@ -1,4 +1,4 @@
-﻿@model             Product
+﻿@model Product
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
@@ -15,6 +15,14 @@
                 @if (!string.IsNullOrEmpty(Model.Img_Url))
                 {
                     <img class="card-img-top mb-5 mb-md-0" src="/images/@Model.Img_Url" alt="Product Image" style="max-width:400px;" />
+                }
+                @foreach (var file in Model.Img_Urls)
+                {
+                    @if (!string.IsNullOrEmpty(file))
+                    {
+                        <img class="card-img-top mb-5 mb-md-0" src="/images/@file.ToString()" alt="Product Image" style="max-width:100px;" />
+                    }
+                    
                 }
 
             </div>

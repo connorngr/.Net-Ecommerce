@@ -15,11 +15,11 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Update">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div>
+        <form asp-action="Update" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="ProductName" class="control-label"></label>
                 <input asp-for="ProductName" class="form-control" />
                 <span asp-validation-for="ProductName" class="text-danger"></span>
@@ -39,15 +39,20 @@
                 <input asp-for="Discount" class="form-control" />
                 <span asp-validation-for="Discount" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-8">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="Img_Url" class="control-label"></label>
                 <input type="file" asp-for="Img_Url" class="form-control" />
                 <span asp-validation-for="Img_Url" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Img_Urls" class="control-label"></label>
+                <input type="file" asp-for="Img_Urls" class="form-control" multiple />
+                <span asp-validation-for="Img_Urls" class="text-danger"></span>
             </div>
             <div class="col-8 mt-4">
                 <img src="@Model.Img_Url" alt="Product Image" style="max-width:200px;"
@@ -55,10 +60,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="DetailProduct" class="control-label"></label>
-                <textarea asp-for="DetailProduct" class="form-control" name="txtDetailProduct"></textarea>
-                <span asp-validation-for="DetailProduct" class="text-danger"></span>
+                <textarea asp-for="DetailProduct" class="form-control" id="txtUDetailProduct"></textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="CategoryId" class="control-label"></label>
                 <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories"></select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
@@ -66,9 +70,7 @@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
-            
             <script>
-                CKEDITOR.replace("txtDetailProduct");
                 document.querySelectorAll('input[type="file"]').forEach(input => {
                     input.addEventListener('change', function (event) {
                         const file = event.target.files[0];
@@ -91,3 +93,95 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    
+    <script src="~/lib/summernote/summernote-bs4.min.js"></script>
+    <link href="~/lib/summernote/summernote-bs4.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/lib/jqueryui/themes/base/theme.css" />
+    <link rel="stylesheet" href="~/lib/jqueryui/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="~/lib/elfinder/css/elfinder.full.css" />
+    <link rel="stylesheet" href="~/lib/elfinder/css/theme.min.css" />
+
+    <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+    <script src="~/lib/elfinder/js/elfinder.min.js"></script>
+
+
+    <script>
+    (function (factory) {
+        if (typeof define === 'function' && define.amd) {
+            define(['jquery'], factory);
+        } 
+        else if (typeof module === 'object' && module.exports) {
+            module.exports = factory(require('jquery'));
+        } else {
+            factory(window.jQuery);
+        }
+    }(function ($) {
+      $.extend($.summernote.plugins, {
+            // Tạo plugin tên elfinder  
+            'elfinder': function (context) {
+                var self = this;
+                // ui has renders to build ui elements.
+                var ui = $.summernote.ui;
+                // Tạo nút bấm
+                context.memo('button.elfinder', function () {
+                    var button = ui.button({
+                        contents: '<i class="note-icon-picture"/> elFinder',
+                        tooltip: 'Quản lý file',
+                        click: function () {
+                            // Bấm vào nút bấm gọi hàm elfinderDialog   
+                            elfinderDialog(context); 
+                        }
+                    });
+                    // create jQuery object from button instance.
+                    var $elfinder = button.render();
+                    return $elfinder;
+                });
+                // This methods will be called when editor is destroyed by $('..').summernote('destroy');
+                // You should remove elements on `initialize`.
+                this.destroy = function () {
+                    this.$panel.remove();
+                    this.$panel = null;
+                };
+            }
+      
+        });
+    }));  
+    function elfinderDialog(editor) {
+  	    var fm = $('<div/>').dialogelfinder({
+  		baseUrl: "@Url.Content("~/lib/elfinder/")",
+        url: "@Url.Action("Connector","FileManager", new {area ="Files"})",
+  		lang : 'vi',
+  		width : 840,
+  		height: 450,
+  		destroyOnClose : true,
+  		getFileCallback : function(files, fm) {
+  			console.log(files);
+                        editor.invoke('editor.insertImage', files.url);
+  		},
+  		commandsOptions : {
+  			getfile : {
+  			    oncomplete : 'close',
+  			    folders : false
+  			}
+  		}
+  	}).dialogelfinder('instance');
+      }
+
+      $('#txtUDetailProduct').summernote({
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video','elfinder']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+      });
+    </script>
+}
