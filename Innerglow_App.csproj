@@ -8,7 +8,68 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\Files\Views\Shared\_LayoutFileManager.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Uploads\1.jpg" />
+    <None Remove="Uploads\images\chipi.jpg" />
+    <None Remove="Uploads\images\cs.jpg" />
+    <None Remove="Uploads\images\g1500g.jpg" />
+    <None Remove="Uploads\images\gcs.jpg" />
+    <None Remove="Uploads\images\HK6.jpg" />
+    <None Remove="Uploads\images\NoImage.png" />
+    <None Remove="Uploads\images\nshv.jpg" />
+    <None Remove="Uploads\images\vtmabc.jpg" />
+    <None Remove="Uploads\images\z4479427313365_5d2e83940ac722f5b9ad8ca3f12e0e22.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Uploads\1.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Uploads\images\chipi.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Uploads\images\cs.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Uploads\images\g1500g.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Uploads\images\gcs.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Uploads\images\HK6.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Uploads\images\NoImage.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Uploads\images\nshv.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Uploads\images\vtmabc.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Uploads\images\z4479427313365_5d2e83940ac722f5b9ad8ca3f12e0e22.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
+    <PackageReference Include="elFinder.NetCore" Version="1.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.3" />
@@ -24,13 +85,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Files\Controller\" />
+    <Folder Include="Areas\Files\Data\" />
+    <Folder Include="Areas\Files\Models\" />
     <Folder Include="DATA\" />
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\DATA\" />
+    <Folder Include="wwwroot\lib\multiple-select\" />
+    <Folder Include="wwwroot\files\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Files\Views\_LayoutFileManager.cshtml" />
+    <None Include="Areas\Files\Views\Shared\_LoginPartial.cshtml" />
     <None Include="Views\Cart\Check.cshtml" />
     <None Include="Views\Cart\Checkout.cshtml" />
     <None Include="Views\Cart\ConfirmPaymentClient.cshtml" />

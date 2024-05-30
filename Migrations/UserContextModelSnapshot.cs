@@ -259,13 +259,16 @@ namespace Innerglow_App.Migrations
                     b.Property<string>("Img_Url")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Img_Urls")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
