@@ -32,5 +32,24 @@ namespace Innerglow_App.Areas.Admin.Controllers
                 return PartialView("ListProductsSearchPartial", products);
             }
         }
+
+        [HttpPost]
+        public IActionResult FindOrder(string keyword)
+        {
+            List<Order> products = new List<Order>();
+            if (string.IsNullOrEmpty(keyword) || keyword.Length < 1)
+            {
+                return PartialView("ListOrdersSearchPartial", null);
+            }
+            products = _context.Orders.AsNoTracking().Include(x => x.OrderStatus).Where(x => x.OrderStatus.StatusName.Contains(keyword)).OrderByDescending(x => x.Id).ToList();
+            if (products == null)
+            {
+                return PartialView("ListOrdersSearchPartial", null);
+            }
+            else
+            {
+                return PartialView("ListOrdersSearchPartial", products);
+            }
+        }
     }
 }

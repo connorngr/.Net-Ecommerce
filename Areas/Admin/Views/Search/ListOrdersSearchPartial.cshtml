@@ -1,19 +1,4 @@
-﻿@model IEnumerable<Order>
-
-@{
-    ViewData["Title"] = "Index";
-    double total = 0;
-}
-
-<h2>Orders</h2>
-
-<div style="display: flex; justify-content: space-between">
-    <select class="form-control" id="categoryId" name="categoryId" style="max-width: 180px" asp-items="@ViewBag.OrderStatusId">
-        <option disabled selected>Categories</option>
-        <option value="0">All</option>
-    </select>
-    <input id="keyword" name="keyword" class="form-control" type="text" placeholder="Search" />
-</div>
+﻿@model List<Order>
 
 @if (Model != null && Model.Count() > 0)
 {
@@ -78,51 +63,4 @@
 else
 {
     <h5>Order is empty</h5>
-}
-
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            jQuery("#categoryId").change(function () {
-                var categoryID = jQuery(this).children(":selected").attr("value");
-                categoryID = parseFloat(categoryID);
-                $('#categoryId option').removeAttr('selected');
-                $("#categoryId > [value = " + categoryID + "]").attr("selected", "true");
-                $.ajax({
-                    url: '/Admin/OrderAdmin/Filtter',
-                    datatype: "json",
-                    type: "GET",
-                    data: {
-                        CategoryID: categoryID
-                    },
-                    async: true,
-                    success: function (results) {
-                        if (results.status == "success") {
-                            window.location.href = results.redirectUrl;
-                        }
-                    },
-                    error: function (xhr) {
-                        alert('Error');
-                    }
-                });
-            });
-            $("#keyword").keyup(function () {
-                var strkeyword = $('#keyword').val();
-                $.ajax({
-                    url: '/Admin/Search/FindOrder',
-                    datatype: "json",
-                    type: "POST",
-                    data: { keyword: strkeyword },
-                    async: true,
-                    success: function (results) {
-                        $("#records_table").html("");
-                        $("#records_table").html(results);
-                    },
-                    error: function (xhr) {
-                        alert("Error");
-                    }
-                });
-            });
-        });
-    </script>
 }

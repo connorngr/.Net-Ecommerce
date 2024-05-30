@@ -79,8 +79,7 @@
             <h3>Sản phẩm mới</h3>
         </header>
         <div class="row">
-            @foreach (var Product in Model.Products)
-{
+            @foreach (var Product in Model.Products.Reverse()) {
     <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
         <div class="card w-100 my-2 shadow-2-strong">
             <a asp-action="Display" asp-route-id="@Product.Id" class="img-wrap">
@@ -105,8 +104,44 @@
                 </div>
         </div>
                 </div>
-}
+    }
+            @foreach (var category in Model.Categories)
+            {
+                <header class="mb-4">
+                    <h3>Sản phẩm @category.CategoryName</h3>
+                </header>
+                <div class="row">
+                    @foreach (var Product in Model.Products.Reverse())
+                    {
+                        if (Product.CategoryId == category.Id) {
+                        <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+                            <div class="card w-100 my-2 shadow-2-strong">
+                                <a asp-action="Display" asp-route-id="@Product.Id" class="img-wrap">
+                                    @if (string.IsNullOrEmpty(Product.Img_Url))
+                                    {
+                                        <img class="card-img-top" src="/images/NoImage.png" alt="...">
+                                    }
+                                    else
+                                    {
+                                        <img class="card-img-top" src="/images/@Product.Img_Url" alt="...">
+                                    }
+                                </a>
 
+                                <div class="card-body d-flex flex-column">
+                                    <h4 class="card-title fw-bolder ">@Product.ProductName</h4>
+                                    <h5 class="font-weight-bold">@Product.CategoryName</h5>
+                                    <p class="card-text" style="margin-bottom: 5px;"><del>@Product.Price VND</del> <span class="text-danger">SALE</span> - @(100 - (((float)Product.Discount / (float)Product.Price) * 100))% </p>
+                                    <h5 class="text-success font-bold">@Product.Discount VND</h5>
+                                    <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
+                                        <button onclick="add(@Product.Id)" class="btn btn-success shadow-0 me-1"><i class="bi bi-bag-plus"></i> Vào giỏ</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    }
+                </div>
+            }
             </div>
     </div>
 </section>

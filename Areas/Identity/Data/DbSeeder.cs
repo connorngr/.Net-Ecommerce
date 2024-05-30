@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Innerglow_App.Constants;
+﻿using Innerglow_App.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Innerglow_App.Areas.Identity.Data
 {
@@ -9,6 +9,19 @@ namespace Innerglow_App.Areas.Identity.Data
         {
             var userMgr = service.GetService<UserManager<User>>();
             var roleMgr = service.GetService<RoleManager<IdentityRole>>();
+            var context = service.GetService<UserContext>();
+            var orderStatus = new List<OrderStatus>
+            {
+                new OrderStatus {StatusId = 1, StatusName = "Pending"},
+                new OrderStatus {StatusId = 2, StatusName = "Shipping"},
+                new OrderStatus {StatusId = 3, StatusName = "Delivered"}
+            };
+
+            if (context?.OrderStatus.Count() == 0)
+            {
+                context?.OrderStatus.AddRange(orderStatus);
+                context?.SaveChanges();
+            }
             //adding some roles to db
             await roleMgr.CreateAsync(new IdentityRole("Admin"));
             await roleMgr.CreateAsync(new IdentityRole("Employee"));

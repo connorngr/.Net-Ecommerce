@@ -41,8 +41,8 @@ body {
 
 .item .content {
   position: relative;
-  height: 510px;
-  width: 510px;
+  height: 92%;
+  width: 96%;
   background-color: #31d398;
   border-radius: 20px;
   object-fit: cover;

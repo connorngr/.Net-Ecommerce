@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="DATA\" />
+    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\DATA\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>

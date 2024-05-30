@@ -15,7 +15,7 @@ namespace Innerglow_App.Repositories
         {
             // return await _context.Products.ToListAsync();
             return await _context.Products
-            .Include(p => p.Category) // Include thông tin về category
+            .Include(p => p.Category).Where(x => x.isDeleted == true) // Include thông tin về category
             .ToListAsync();
         }
         public async Task<Product> GetByIdAsync(int id)
@@ -37,7 +37,7 @@ namespace Innerglow_App.Repositories
         public async Task DeleteAsync(int id)
         {
             var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
+            product.isDeleted = false;
             await _context.SaveChangesAsync();
         }
     }
