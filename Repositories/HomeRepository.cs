@@ -28,6 +28,7 @@ namespace Innerglow_App.Repositories
                                                    {
                                                        Id = product.Id,
                                                        ProductName = product.ProductName,
+                                                       Discount = product.Discount,
                                                        Img_Url = product.Img_Url,
                                                        Description = product.Description,
                                                        Price = product.Price,
