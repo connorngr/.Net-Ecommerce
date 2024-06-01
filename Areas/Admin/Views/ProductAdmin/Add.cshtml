@@ -41,8 +41,7 @@
             </div>
             <div class="form-group col-md-4">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <textarea asp-for="Description" class="form-control" id="txtAddDescription" ></textarea>
             </div>
             <div class="form-group col-md-4">
                 <label asp-for="Img_Url" class="control-label"></label>
@@ -152,7 +151,7 @@
       $('#txtDetailProduct').summernote({
         placeholder: 'Hello stand alone ui',
         tabsize: 2,
-        height: 120,
+        height: 200,
         toolbar: [
           ['style', ['style']],
           ['font', ['bold', 'underline', 'clear']],
@@ -163,6 +162,19 @@
           ['view', ['fullscreen', 'codeview', 'help']]
         ]
       });
+        $('#txtAddDescription').summernote({
+            placeholder: 'Hello stand alone ui',
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
     </script>
 }
 

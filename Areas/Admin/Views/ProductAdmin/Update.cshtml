@@ -39,10 +39,9 @@
                 <input asp-for="Discount" class="form-control" />
                 <span asp-validation-for="Discount" class="text-danger"></span>
             </div>
-            <div class="form-group col-md-8">
+            <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <textarea asp-for="Description" class="form-control" id="txtUDescription" > </textarea>
             </div>
             <div class="form-group col-md-4">
                 <label asp-for="Img_Url" class="control-label"></label>
@@ -183,5 +182,18 @@
           ['view', ['fullscreen', 'codeview', 'help']]
         ]
       });
+        $('#txtUDescription').summernote({
+            placeholder: 'Hello stand alone ui',
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
     </script>
 }

@@ -35,7 +35,7 @@
                     ->
                     <span ml-5>@Model.Price VND</span>
                 </div>
-                <p class="lead">@Model.Description</p>
+                <p class="lead">@Html.Raw(Model.Description)</p>
                 <div class="d-flex">
 
                     <button class="btn btn-outline-dark flex-shrink-0 mx" type="button" onclick="add(@Model.Id)">

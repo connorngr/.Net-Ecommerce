@@ -11,7 +11,7 @@ namespace Innerglow_App.Models
     {
         public int Id { get; set; }
         [Required]
-        [StringLength(30,MinimumLength=3)]
+        [StringLength(100,MinimumLength=3)]
         [DisplayName("Tên sản phẩm")]
         public string ProductName { get; set; }
         [Required]

@@ -203,6 +203,7 @@ namespace Innerglow_App.Areas.Admin.Controllers
                 {
                     product.Img_Url = await SaveImage(Img_Url);
                 }
+
                 if (Img_Urls == null)
                 {
                     product.Img_Urls = existingProduct.Img_Urls;
@@ -219,6 +220,7 @@ namespace Innerglow_App.Areas.Admin.Controllers
                 existingProduct.Description = product.Description;
                 existingProduct.CategoryId = product.CategoryId;
                 existingProduct.Img_Url = product.Img_Url;
+                existingProduct.Img_Urls = product.Img_Urls;
                 existingProduct.DetailProduct = product.DetailProduct;
                 existingProduct.Time = product.Time;
                 await _productRepository.UpdateAsync(existingProduct);
