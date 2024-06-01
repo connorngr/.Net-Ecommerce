@@ -2,66 +2,91 @@
 
 
 <section class="py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6">
-                @if (!string.IsNullOrEmpty(Model.Img_Url))
-                {
-                    <img class="card-img-top mb-5 mb-md-0" src="/images/@Model.Img_Url" alt="Product Image" style="max-width:400px;" />
-                }
-                
-                </div>
-            <div class="col-md-6">
-                <div class="small mb-1">SKU: @Model.Id</div>
-                <h1 class="display-5 fw-bolder">@Model.ProductName</h1>
-                <div class="fs-5 mb-5">
-                    <span mr-5>Price: @Model.Discount VND</span>
-                    ->
-                    <span ml-5>@Model.Price VND</span>
-                </div>
-                <p class="lead">@Html.Raw(Model.Description)</p>
-                <div class="d-flex">
-                    
-                    <button class="btn btn-outline-dark flex-shrink-0 mx" type="button" onclick="add(@Model.Id)">
-                        <i class="bi-cart-fill me-1"></i>
-                        Thêm giỏ hàng
-                    </button>
-                    
-                    <a class="btn btn-warning mx-2" asp-action="Index">Trở lại</a>
-                </div>
+    <section class="py-5">
+        <div class="container">
+            <div class="row gx-5">
+                <aside class="col-lg-6">
+                    <div class="border rounded-4 mb-3 d-flex justify-content-center">
+                        <a data-fslightbox="mygalley" class="rounded-4" target="_blank" data-type="image" >
+                            <img style="max-width: 100%; max-height: 100vh; margin: auto;" class="rounded-4 fit" src="/images/@Model.Img_Url">
+                        </a>
+                    </div>
+                    <div class="d-flex justify-content-center mb-3">
+                        <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/big1.webp">
+                            <img width="60" height="60" class="rounded-2" src="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/big1.webp">
+                        </a>
+                        <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/big2.webp">
+                            <img width="60" height="60" class="rounded-2" src="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/big2.webp">
+                        </a>
+                        <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/big3.webp">
+                            <img width="60" height="60" class="rounded-2" src="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/big3.webp">
+                        </a>
+                        <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/big4.webp">
+                            <img width="60" height="60" class="rounded-2" src="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/big4.webp">
+                        </a>
+                        <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/big.webp">
+                            <img width="60" height="60" class="rounded-2" src="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/big.webp">
+                        </a>
+                    </div>
+                    <!-- thumbs-wrap.// -->
+                    <!-- gallery-wrap .end// -->
+                </aside>
+                <main class="col-lg-6">
+                    <div class="ps-lg-3">
+                        <h4 class="title text-dark">
+                            @Model.ProductName
+                        </h4>
+
+                        <div class="mb-3">
+                            <span class="h5"><del>@Model.Price VND</del> <span class="text-danger">SALE</span> - @(100 - (((float)Model.Discount / (float)Model.Price) * 100))%</span>
+                            <br/>
+                            <h4 class="h5 text-success">@Model.Discount VND</h4>
+                        </div>
+                        <div class="row">
+                            <h6 class="col-3">Loại sản phẩm: @Model.Category.CategoryName</h6>
+                        </div>
+                        <p>
+                            @Html.Raw(Model.Description)
+                        </p>
+                        <a class="btn btn-warning shadow-0 text-white" asp-action="Index">Quay lại</a>
+                        <a class="btn btn-success shadow-0" onclick="add(@Model.Id)> <i class="me-1 fa fa-shopping-basket"></i>Thêm vào giỏ</a>
+                        <hr>
+                        <p>@Html.Raw(Model.DetailProduct)</p>
+                        
+                    </div>
+                </main>
             </div>
         </div>
-        <p>@Html.Raw(Model.DetailProduct)</p>
-    </div>
+    </section>
     <section id="featured-services" class="featured-services">
         <div class="container">
 
             <div class="row gy-4">
 
                 <div class="col-lg-4 col-md-6 service-item d-flex aos-init aos-animate" data-aos="fade-up">
-                    <div class="icon flex-shrink-0"><i class="fa-solid fa-cart-flatbed"></i></div>
+                    <div class="icon flex-shrink-0"><i class="bi bi-check-circle"></i></div>
                     <div>
-                        <h4 class="title">Lorem Ipsum</h4>
-                        <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+                        <h4 class="title">Đảm bảo chính hãng</h4>
+                        <p class="description">Chúng tôi cam kết tất cả sản phẩm đều là hàng chính hãng, được kiểm tra và chứng nhận từ các nhà cung cấp uy tín.</p>
                          
                     </div>
                 </div>
                 <!-- End Service Item -->
 
                 <div class="col-lg-4 col-md-6 service-item d-flex aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-                    <div class="icon flex-shrink-0"><i class="fa-solid fa-truck"></i></div>
+                    <div class="icon flex-shrink-0"><i class="bi bi-truck"></i></div>
                     <div>
-                        <h4 class="title">Dolor Sitema</h4>
-                        <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
+                        <h4 class="title">Giao hàng nhanh</h4>
+                        <p class="description">Dịch vụ giao hàng nhanh chóng, đảm bảo sản phẩm đến tay bạn trong thời gian ngắn nhất, an toàn và đúng hẹn.</p>
                          
                     </div>
                 </div><!-- End Service Item -->
 
                 <div class="col-lg-4 col-md-6 service-item d-flex aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
-                    <div class="icon flex-shrink-0"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                    <div class="icon flex-shrink-0"><i class="bi bi-hand-thumbs-up"></i></div>
                     <div>
-                        <h4 class="title">Sed ut perspiciatis</h4>
-                        <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+                        <h4 class="title">Sản phẩm chọn lọc</h4>
+                        <p class="description">Mỗi sản phẩm đều được chọn lọc kỹ lưỡng, đảm bảo chất lượng cao và đáp ứng các tiêu chuẩn khắt khe nhất.</p>
                          
                     </div>
                 </div><!-- End Service Item -->

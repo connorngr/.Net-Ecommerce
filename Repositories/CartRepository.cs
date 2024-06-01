@@ -55,7 +55,7 @@ namespace Innerglow_App.Repositories
                         ProductId = ProductId,
                         ShoppingCartId = cart.Id,
                         Quantity = Qty,
-                        UnitPriced = product.Price  // it is a new line after update
+                        UnitPriced = product.Discount  // it is a new line after update
                     };
                     _db.CartDetails.Add(cartItem);
                 }

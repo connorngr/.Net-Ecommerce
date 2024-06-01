@@ -124,7 +124,7 @@ namespace Innerglow_App.Controllers
             bool succeed = false;
             //Huy: Bad
             _logger.LogInformation("abc" + rErrorCode);
-            if (short.Parse(rErrorCode) == 0)
+            if (short.Parse(rErrorCode) != 0)
             {
                 _logger.LogInformation(HttpContext.Session.GetString("Notes"));
                 string address = HttpContext.Session.GetString("Address");

@@ -76,7 +76,17 @@
 <section class="py-5">
     <div class="container">
         <header class="mb-4">
-            <h3>Sản phẩm mới</h3>
+        @if (Model.Search == "" && Model.CategoryID == 0)
+        {
+                <h3>Sản phẩm mới</h3>
+        }
+        else {
+                <h3>Sản phẩm tìm kiếm</h3>
+        }
+            @if (!Enumerable.Any(Model.Products))
+        {
+            <h4>Không tìm thấy sản phẩm</h4>
+        }
         </header>
         <div class="row">
             @foreach (var Product in Model.Products.Reverse()) {
@@ -105,6 +115,7 @@
         </div>
                 </div>
     }
+    @if (Model.Search=="" && Model.CategoryID==0){
             @foreach (var category in Model.Categories)
             {
                 <header class="mb-4">
@@ -141,6 +152,7 @@
                         }
                     }
                 </div>
+            }
             }
             </div>
     </div>
