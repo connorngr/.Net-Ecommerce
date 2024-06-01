@@ -2,6 +2,7 @@
 
 
 <section class="py-5">
+<<<<<<< HEAD
     <section class="py-5">
         <div class="container">
             <div class="row gx-5">
@@ -55,6 +56,35 @@
                         
                     </div>
                 </main>
+=======
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6">
+                @if (!string.IsNullOrEmpty(Model.Img_Url))
+                {
+                    <img class="card-img-top mb-5 mb-md-0" src="/images/@Model.Img_Url" alt="Product Image" style="max-width:400px;" />
+                }
+                
+                </div>
+            <div class="col-md-6">
+                <div class="small mb-1">SKU: @Model.Time.ToString("dd-MM-yyyy")</div>
+                <h1 class="display-5 fw-bolder">@Model.ProductName</h1>
+                <div class="fs-5 mb-5">
+                    <span mr-5>Price: @Model.Discount VND</span>
+                    ->
+                    <span ml-5>@Model.Price VND</span>
+                </div>
+                <p class="lead">@Html.Raw(Model.Description)</p>
+                <div class="d-flex">
+                    
+                    <button class="btn btn-outline-dark flex-shrink-0 mx" type="button" onclick="add(@Model.Id)">
+                        <i class="bi-cart-fill me-1"></i>
+                        Thêm giỏ hàng
+                    </button>
+                    
+                    <a class="btn btn-warning mx-2" asp-action="Index">Trở lại</a>
+                </div>
+>>>>>>> 098ca721f9a54486347485dda294d7bc547a2201
             </div>
         </div>
     </section>
