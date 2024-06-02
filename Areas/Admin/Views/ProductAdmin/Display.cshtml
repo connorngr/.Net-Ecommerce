@@ -38,10 +38,7 @@
                 <p class="lead">@Html.Raw(Model.Description)</p>
                 <div class="d-flex">
 
-                    <button class="btn btn-outline-dark flex-shrink-0 mx" type="button" onclick="add(@Model.Id)">
-                        <i class="bi-cart-fill me-1"></i>
-                        Thêm giỏ hàng
-                    </button>
+                    <button onclick="add(@Model.Id)" class="btn btn-success shadow-0 me-1"><i class="bi bi-bag-plus"></i> Vào giỏ</button>
 
                     <a class="btn btn-warning mx-2" asp-action="Index">Trở lại</a>
                 </div>
