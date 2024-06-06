@@ -5,7 +5,7 @@
 }
 @if (Model == false)
 {
-    <h1 class="m-auto">Bạn có thể thử thanh toán lại</h1>
+    <h1 class="m-auto">You can try payment again</h1>
 }
 else
 {
@@ -14,23 +14,23 @@ else
         <form asp-action="Check">
         <img src="/images/chipi.jpg" class="card-img-top" alt="image thanks you buy product" />
         <div class="card-body">
-            <h5 class="card-title">Thanh toán thành công</h5>
-            <p class="card-text align-content-xl-center">Đơn hàng bạn đã được xác nhận vui lòng kiểm tra email.
+            <h5 class="card-title">Payment success</h5>
+            <p class="card-text align-content-xl-center">Your order has been confirmed, please check your email.
                 <p class="align-content-xl-center">
-                Chúng tôi hy vọng bạn đã có những trải nghiệm tuyệt vời với Innerglow.
-                Cảm ơn bạn đã lựa chọn Innerglow! Chúng tôi hy vọng bạn sẽ hài lòng với những gì bạn đang tìm kiếm.
-                Cảm ơn bạn vì sự tin tưởng
+                We hope you have had a great experience with Innerglow.
+Thank you for choosing Innerglow! We hope you will be satisfied with what you are looking for.
+Thank you for your trust.
                 </p>
             </p>
         </div>
         <ul class="list-group list-group-light list-group-small">
             <a asp-controller="Home" asp-action="Index" style="color:black;text-decoration:none;" class="m-auto">
-                <li class="list-group-item px-4">Xem sản phẩm tương tự</li>
+                <li class="list-group-item px-4">See similar products</li>
             </a>
         </ul>
         <div class="card-body">
-            <a asp-controller="UserOrder" asp-action="UserOrders" class="card-link" style="color:black;text-decoration:none;">Đơn hàng đã đặt</a>
-            <a asp-controller="Home" asp-action="Index" class="card-link" style="color:black;text-decoration:none;">Trở lại trang chủ</a>
+            <a asp-controller="UserOrder" asp-action="UserOrders" class="card-link" style="color:black;text-decoration:none;">Order placed</a>
+            <a asp-controller="Home" asp-action="Index" class="card-link" style="color:black;text-decoration:none;">Return to home page</a>
         </div>
         </form>
     </div>
@@ -53,7 +53,7 @@ else
 
 @if (Model.Value == false)
 {
-    <h1 class="m-auto">Bạn có thể thử thanh toán lại</h1>
+    <h1 class="m-auto">You can try payment again</h1>
 }
 else
 {
@@ -63,22 +63,22 @@ else
                 <img src="/images/chipi.jpg" class="card-img-top" alt="image thanks you buy product" />
                 <div class="card-body">
                     <h5 class="card-title">Thanh toán thành công</h5>
-                    <p class="card-text align-content-xl-center">Đơn hàng bạn đã được xác nhận vui lòng kiểm tra email.
+                    <p class="card-text align-content-xl-center">Your order has been confirmed, please check your email.
                         <p class="align-content-xl-center">
-                            Chúng tôi hy vọng bạn đã có những trải nghiệm tuyệt vời với Innerglow.
-                            Cảm ơn bạn đã lựa chọn Innerglow! Chúng tôi hy vọng bạn sẽ hài lòng với những gì bạn đang tìm kiếm.
-                            Cảm ơn bạn vì sự tin tưởng
+                        We hope you have had a great experience with Innerglow.
+                        Thank you for choosing Innerglow! We hope you will be satisfied with what you are looking for.
+                        Thank you for your trust.
                         </p>
                     </p>
                 </div>
                 <ul class="list-group list-group-light list-group-small">
                     <a asp-controller="Home" asp-action="Index" style="color:black;text-decoration:none;" class="m-auto">
-                        <li class="list-group-item px-4">Xem sản phẩm tương tự</li>
+                    <li class="list-group-item px-4">See similar products</li>
                     </a>
                 </ul>
                 <div class="card-body">
-                    <a asp-controller="UserOrder" asp-action="UserOrders" class="card-link" style="color:black;text-decoration:none;">Đơn hàng đã đặt</a>
-                    <a asp-controller="Home" asp-action="Index" class="card-link" style="color:black;text-decoration:none;">Trở lại trang chủ</a>
+                    <a asp-controller="UserOrder" asp-action="UserOrders" class="card-link" style="color:black;text-decoration:none;">Order placed</a>
+                    <a asp-controller="Home" asp-action="Index" class="card-link" style="color:black;text-decoration:none;">Return to home page</a>
                 </div>
             </form>
         </div>
@@ -88,7 +88,7 @@ else
 @Html.Raw(@"
 <script>
     window.history.onpopstate = function (event) {
-        window.location.href = '/Home/Index'; // Thay thế bằng URL mong muốn của bạn
+        window.location.href = '/Home/Index'; // Change url you want
     };
 </script>
 ")

@@ -8,13 +8,13 @@
 <h1>Roles</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary mb-4">Create New</a>
+    <a asp-action="Create" class="btn btn-primary mb-4">Creat role new</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>STT</th>
-            <th>Tên</th>
+            <th>Number</th>
+            <th>NameRole</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -28,8 +28,8 @@
                     <td>@i</td>
                     <td>@item.Name</td>
                     <td>
-                        <a href="/admin/roleadmin/Edit/@item.Id" class="btn btn-warning">Sửa</a>
-                        <a href="/admin/roleadmin/Delete/@item.Id" class="btn btn-danger">Xóa</a>
+                        <a href="/admin/roleadmin/Edit/@item.Id" class="btn btn-warning">Edit</a>
+                        <a href="/admin/roleadmin/Delete/@item.Id" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
                 i++;

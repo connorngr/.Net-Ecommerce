@@ -62,14 +62,14 @@
                 <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.Categories"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" id="submit" />
+                <input type="submit" value="Create product new" class="btn btn-primary" id="submit" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to list</a>
 </div>
 
 @section Scripts {
@@ -107,7 +107,7 @@
                 context.memo('button.elfinder', function () {
                     var button = ui.button({
                         contents: '<i class="note-icon-picture"/> elFinder',
-                        tooltip: 'Quản lý file',
+                        tooltip: 'File Management',
                         click: function () {
                             // Bấm vào nút bấm gọi hàm elfinderDialog   
                             elfinderDialog(context); 
@@ -149,7 +149,7 @@
       }
 
       $('#txtDetailProduct').summernote({
-        placeholder: 'Hello stand alone ui',
+        placeholder: 'Enter product details here',
         tabsize: 2,
         height: 200,
         toolbar: [
@@ -163,7 +163,7 @@
         ]
       });
         $('#txtAddDescription').summernote({
-            placeholder: 'Hello stand alone ui',
+            placeholder: 'Enter product details here',
             tabsize: 2,
             height: 120,
             toolbar: [

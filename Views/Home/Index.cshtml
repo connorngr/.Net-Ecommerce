@@ -49,9 +49,9 @@
         <div class="col-lg-5 col-md-12 col-12">
             <form asp-action="Index">
                 <div class="input-group float-center">
-                    <label class="visually-hidden" for="CategoryID">Các loại sản phẩm</label>
+                    <label class="visually-hidden" for="CategoryID">Product types:</label>
                     <select class="form-select px-2" id="CategoryID" name="CategoryID">
-                        <option selected>Chọn...</option>
+                        <option selected>Chose...</option>
                         @foreach (var category in Model.Categories)
                         {
                             <option selected="@(category.Id == Model.CategoryID)" value="@category.Id">@category.CategoryName</option>
@@ -59,7 +59,7 @@
                     </select>
                     <div class="form-outline px-2">
                         <input type="search" id="Search" value="@Model.Search" class="form-control" name="Search" />
-                        <label class="visually-hidden" for="Search">Tìm kiếm</label>
+                        <label class="visually-hidden" for="Search">Search</label>
                     </div>
                     <button type="submit" class="btn btn-primary shadow-0">
                         <i class="fas fa-search"></i>
@@ -78,14 +78,14 @@
         <header class="mb-4">
         @if (Model.Search == "" && Model.CategoryID == 0)
         {
-                <h3>Sản phẩm mới</h3>
+                <h3>Product new</h3>
         }
         else {
-                <h3>Sản phẩm tìm kiếm</h3>
+                <h3>Product after searching</h3>
         }
             @if (!Enumerable.Any(Model.Products))
         {
-            <h4>Không tìm thấy sản phẩm</h4>
+            <h4>No products found</h4>
         }
         </header>
         <div class="row">
@@ -109,7 +109,7 @@
                         <p class="card-text" style="margin-bottom: 5px;"><del>@Product.Price VND</del> <span class="text-danger">SALE</span> - @(100 - (((float)Product.Discount / (float)Product.Price) * 100))% </p>
                         <h5 class="text-success font-bold">@Product.Discount VND</h5>
                         <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                            <button onclick="add(@Product.Id)" class="btn btn-success shadow-0 me-1"><i class="bi bi-bag-plus"></i> Vào giỏ</button>
+                            <button onclick="add(@Product.Id)" class="btn btn-success shadow-0 me-1"><i class="bi bi-bag-plus"></i> Add cart</button>
                         </div>
                 </div>
         </div>
@@ -119,7 +119,7 @@
             @foreach (var category in Model.Categories)
             {
                 <header class="mb-4">
-                    <h3>Sản phẩm @category.CategoryName</h3>
+                    <h3>Product: @category.CategoryName</h3>
                 </header>
                 <div class="row">
                     @foreach (var Product in Model.Products.Reverse())
@@ -144,7 +144,7 @@
                                     <p class="card-text" style="margin-bottom: 5px;"><del>@Product.Price VND</del> <span class="text-danger">SALE</span> - @(100 - (((float)Product.Discount / (float)Product.Price) * 100))% </p>
                                     <h5 class="text-success font-bold">@Product.Discount VND</h5>
                                     <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                                        <button onclick="add(@Product.Id)" class="btn btn-success shadow-0 me-1"><i class="bi bi-bag-plus"></i> Vào giỏ</button>
+                                        <button onclick="add(@Product.Id)" class="btn btn-success shadow-0 me-1"><i class="bi bi-bag-plus"></i> Add cart</button>
                                     </div>
                                 </div>
                             </div>

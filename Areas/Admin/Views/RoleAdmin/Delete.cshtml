@@ -5,10 +5,10 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<h1>Delete role</h1>
 
 <form asp-action="DeleteConfirmed" method="post">
     <input type="hidden" asp-for="Id" />
-    <p>Are you sure you want to delete @Model.Name</p>
-    <button type="submit" class="btn btn-danger">Delete</button>
+    <p>Are you sure you want to delete @Model.Name?</p>
+    <button type="submit" class="btn btn-danger">Delete this role</button>
 </form>

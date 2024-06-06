@@ -34,13 +34,13 @@
                             <h4 class="h5 text-success">@Model.Discount VND</h4>
                         </div>
                         <div class="row">
-                            <h6 class="col-3">Loại sản phẩm: @Model.Category.CategoryName</h6>
+                            <h6 class="col-3">Product type: @Model.Category.CategoryName</h6>
                         </div>
                         <p>
                             @Html.Raw(Model.Description)
                         </p>
-                        <a class="btn btn-warning shadow-0 text-white" asp-action="Index">Quay lại</a>
-                        <button onclick="add(@Model.Id)" class="btn btn-success shadow-0 me-1"><i class="bi bi-bag-plus"></i> Vào giỏ</button>
+                        <a class="btn btn-warning shadow-0 text-white" asp-action="Index">Back</a>
+                        <button onclick="add(@Model.Id)" class="btn btn-success shadow-0 me-1"><i class="bi bi-bag-plus"></i> Add cart</button>
                         <hr>
                         <p>@Html.Raw(Model.DetailProduct)</p>
                         
@@ -58,8 +58,8 @@
                 <div class="col-lg-4 col-md-6 service-item d-flex aos-init aos-animate" data-aos="fade-up">
                     <div class="icon flex-shrink-0"><i class="bi bi-check-circle"></i></div>
                     <div>
-                        <h4 class="title">Đảm bảo chính hãng</h4>
-                        <p class="description">Chúng tôi cam kết tất cả sản phẩm đều là hàng chính hãng, được kiểm tra và chứng nhận từ các nhà cung cấp uy tín.</p>
+                        <h4 class="title">Guaranteed Authentic</h4>
+                        <p class="description">We guarantee that all products are authentic, verified, and certified by reputable suppliers.</p>
                          
                     </div>
                 </div>
@@ -68,8 +68,8 @@
                 <div class="col-lg-4 col-md-6 service-item d-flex aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                     <div class="icon flex-shrink-0"><i class="bi bi-truck"></i></div>
                     <div>
-                        <h4 class="title">Giao hàng nhanh</h4>
-                        <p class="description">Dịch vụ giao hàng nhanh chóng, đảm bảo sản phẩm đến tay bạn trong thời gian ngắn nhất, an toàn và đúng hẹn.</p>
+                        <h4 class="title">Fast delivery</h4>
+                        <p class="description">Fast delivery service ensures your products reach you in the shortest possible time, safely and on schedule.</p>
                          
                     </div>
                 </div><!-- End Service Item -->
@@ -77,8 +77,8 @@
                 <div class="col-lg-4 col-md-6 service-item d-flex aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
                     <div class="icon flex-shrink-0"><i class="bi bi-hand-thumbs-up"></i></div>
                     <div>
-                        <h4 class="title">Sản phẩm chọn lọc</h4>
-                        <p class="description">Mỗi sản phẩm đều được chọn lọc kỹ lưỡng, đảm bảo chất lượng cao và đáp ứng các tiêu chuẩn khắt khe nhất.</p>
+                        <h4 class="title">Curated products</h4>
+                        <p class="description">Each product carefully curated to ensure high quality and meets the strickest standards</p>
                          
                     </div>
                 </div><!-- End Service Item -->

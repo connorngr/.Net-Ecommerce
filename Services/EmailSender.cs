@@ -38,7 +38,7 @@ public class EmailSender : IEmailSender
         client.EnableSsl = true;
         client.UseDefaultCredentials = false;
         client.Credentials = new NetworkCredential(senderEmail, password);
-        MailAddress senderAddress = new MailAddress(senderEmail, "He thong website");
+        MailAddress senderAddress = new MailAddress(senderEmail, "websiete system");
         // Create the email email
         MailMessage email = new MailMessage(senderAddress, new MailAddress(recipientEmail));
         email.Subject = subject;

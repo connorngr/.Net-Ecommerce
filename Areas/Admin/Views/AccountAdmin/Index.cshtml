@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Accounts</h1>
+<h1>Account management</h1>
 
 <p>
-    <a asp-action="Add" class="btn btn-primary mb-4">Create New</a>
+    <a asp-action="Add" class="btn btn-primary mb-4">Create account new</a>
 </p>
 
 <select class="form-control" id="roleId" style="max-width: 180px" asp-items="@ViewBag.Role">
@@ -50,11 +50,11 @@
             <td>
                     @if (item.isLooked)
                     {
-                        <a href="@Url.Action("Unlock", "AccountAdmin", new { userId = item.Id })" class="btn btn-primary">Mở Khóa</a>
+                        <a href="@Url.Action("Unlock", "AccountAdmin", new { userId = item.Id })" class="btn btn-primary">Unlock</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("Lock", "AccountAdmin", new { userId = item.Id })" class="btn btn-danger">Khóa</a>
+                        <a href="@Url.Action("Lock", "AccountAdmin", new { userId = item.Id })" class="btn btn-danger">Lock</a>
                     }
                     <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id">Edit</a>
 
