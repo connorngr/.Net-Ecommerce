@@ -75,36 +75,79 @@
 
 <section class="py-5">
     <div class="container">
-        <header class="mb-4">
+        @* <header class="mb-4">
             <h3>Sản phẩm mới</h3>
-        </header>
+        </header> *@
         <div class="row">
-            @foreach (var Product in Model.Products.Reverse()) {
-    <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
-        <div class="card w-100 my-2 shadow-2-strong">
-            <a asp-action="Display" asp-route-id="@Product.Id" class="img-wrap">
-                @if (string.IsNullOrEmpty(Product.Img_Url))
+            @* <div class="row slide">
+                <i id="left" class="fa-solid fa-angle-left"></i>
+                @foreach (var Product in Model.Products.Reverse())
                 {
-                    <img class="card-img-top" src="/images/NoImage.png" alt="...">
-                }
-                else
-                {
-                    <img class="card-img-top" src="/images/@Product.Img_Url" alt="...">
-                }
-                        </a>
-                    
-                <div class="card-body d-flex flex-column">
-                    <h4 class="card-title fw-bolder ">@Product.ProductName</h4>
-                    <h5 class="font-weight-bold">@Product.CategoryName</h5>
-                        <p class="card-text" style="margin-bottom: 5px;"><del>@Product.Price VND</del> <span class="text-danger">SALE</span> - @(100 - (((float)Product.Discount / (float)Product.Price) * 100))% </p>
-                        <h5 class="text-success font-bold">@Product.Discount VND</h5>
-                        <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                            <button onclick="add(@Product.Id)" class="btn btn-success shadow-0 me-1"><i class="bi bi-bag-plus"></i> Vào giỏ</button>
+                    <div class="col-lg-3 col-md-6 col-sm-6 d-flex item">
+                        <div class="card w-100 my-2 shadow-2-strong">
+                            <a asp-action="Display" asp-route-id="@Product.Id" class="img-wrap">
+                                @if (string.IsNullOrEmpty(Product.Img_Url))
+                                {
+                                    <img class="card-img-top" src="/images/NoImage.png" alt="...">
+                                }
+                                else
+                                {
+                                    <img class="card-img-top" src="/images/@Product.Img_Url" alt="...">
+                                }
+                            </a>
+
+                            <div class="card-body d-flex flex-column">
+                                <h4 class="card-title fw-bolder ">@Product.ProductName</h4>
+                                <h5 class="font-weight-bold">@Product.CategoryName</h5>
+                                <p class="card-text" style="margin-bottom: 5px;"><del>@Product.Price VND</del> <span class="text-danger">SALE</span> - @(100 - (((float)Product.Discount / (float)Product.Price) * 100))% </p>
+                                <h5 class="text-success font-bold">@Product.Discount VND</h5>
+                                <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
+                                    <button onclick="add(@Product.Id)" class="btn btn-success shadow-0 me-1"><i class="bi bi-bag-plus"></i> Vào giỏ</button>
+                                </div>
+                            </div>
                         </div>
-                </div>
-        </div>
-                </div>
-    }
+                    </div>
+                }
+                <i id="right" class="fa-solid fa-angle-right"></i>
+            </div> *@
+            <div class="card_wrapper">
+                    <header class="mb-4">
+                        <h3>Sản phẩm mới</h3>
+                    </header>
+                    @* <div class="row"> *@
+                        <div class="owl-carousel slider_carousel row">
+                            @foreach (var Product in Model.Products.Reverse())
+                            {
+                                <div class="col-lg-3 col-md-6 col-sm-6 d-flex" style="width: 100%;">
+                                    <div class="card w-100 my-2 shadow-2-strong">
+                                        <a asp-action="Display" asp-route-id="@Product.Id" class="img-wrap">
+                                            @if (string.IsNullOrEmpty(Product.Img_Url))
+                                            {
+                                                <img class="card-img-top" src="/images/NoImage.png" alt="...">
+                                            }
+                                            else
+                                            {
+                                                <img class="card-img-top" src="/images/@Product.Img_Url" alt="...">
+                                            }
+                                        </a>
+
+                                        <div class="card-body d-flex flex-column">
+                                            <h4 class="card-title fw-bolder ">@Product.ProductName</h4>
+                                            <h5 class="font-weight-bold">@Product.CategoryName</h5>
+                                            <p class="card-text" style="margin-bottom: 5px;"><del>@Product.Price VND</del> <span class="text-danger">SALE</span> - @(100 - (((float)Product.Discount / (float)Product.Price) * 100))% </p>
+                                            <h5 class="text-success font-bold">@Product.Discount VND</h5>
+                                            <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
+                                                <button onclick="add(@Product.Id)" class="btn btn-success shadow-0 me-1"><i class="bi bi-bag-plus"></i> Vào giỏ</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    @* </div> *@
+            </div>
+            
+            
             @foreach (var category in Model.Categories)
             {
                 <header class="mb-4">
@@ -170,6 +213,33 @@
                 console.log(err);
             }
         }
+
+        function slider_carouselInit() {
+            $('.owl-carousel.slider_carousel').owlCarousel({
+                dots: false,
+                loop: true,
+                margin: 30,
+                stagePadding: 2,
+                autoplay: false,
+                nav: true,
+                navText: ["<i class='far fa-arrow-alt-circle-left'></i>", "<i class='far fa-arrow-alt-circle-right'></i>"],
+                autoplayTimeout: 1500,
+                autoplayHoverPause: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    768: {
+                        items: 2,
+                    },
+                    992: {
+                        items: 4
+                    }
+                }
+            });
+        }
+        slider_carouselInit();
+
     </script>
 }
 

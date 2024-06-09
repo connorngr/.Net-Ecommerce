@@ -1,11 +1,19 @@
 ﻿@using Innerglow_App.Areas.Identity.Pages.Account
 @model RegisterModel.InputModel;
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "Create";
 }
+
+
 
 <section class="content">
     <div class="card">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" asp-action="Index">Account</a></li>
+                <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Create</li>
+            </ol>
+        </nav>
         <div class="card-header">
             <h3 class="card-title">@ViewBag.Title</h3>
         </div>
@@ -37,8 +45,8 @@
                     @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">Thêm Mới</button>
-                    <a href="/admin/accountadmin/index" class="btn btn-danger">Quay Lại</a>
+                    <button type="submit" class="btn btn-success">Create</button>
+                    <a href="/admin/accountadmin/index" class="btn btn-danger">Back to list</a>
                 </div>
             }
         </div>

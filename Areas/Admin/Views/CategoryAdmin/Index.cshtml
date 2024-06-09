@@ -1,7 +1,17 @@
 ﻿@model IEnumerable<Category>
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" asp-action="Index">Category</a></li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Index</li>
+    </ol>
+</nav>
+
 <h2>Categories</h2>
-<a class="btn btn-primary mb-4" asp-action="Add">Thêm Danh Mục</a>
+
+<p>
+    <a class="btn btn-primary mb-4" asp-action="Add">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>

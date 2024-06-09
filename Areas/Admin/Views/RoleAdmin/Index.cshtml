@@ -5,6 +5,13 @@
     ViewData["Title"] = "Index";
 }
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" asp-action="Index">Role</a></li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Index</li>
+    </ol>
+</nav>
+
 <h1>Roles</h1>
 
 <p>
@@ -15,7 +22,6 @@
         <tr>
             <th>STT</th>
             <th>Tên</th>
-            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -27,10 +33,6 @@
                 <tr id="trow_@item.Id">
                     <td>@i</td>
                     <td>@item.Name</td>
-                    <td>
-                        <a href="/admin/roleadmin/Edit/@item.Id" class="btn btn-warning">Sửa</a>
-                        <a href="/admin/roleadmin/Delete/@item.Id" class="btn btn-danger">Xóa</a>
-                    </td>
                 </tr>
                 i++;
             }
