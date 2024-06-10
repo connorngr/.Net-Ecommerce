@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 namespace Innerglow_App.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = "Admin, Employee")]
+    [Authorize(Roles = "Admin, Employee")]
     public class ProductAdminController : Controller
     {
         private readonly IProductRepository _productRepository;
