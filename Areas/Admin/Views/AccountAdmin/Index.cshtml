@@ -4,16 +4,19 @@
     ViewData["Title"] = "Index";
 }
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" asp-action="Index">Account</a></li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Index</li>
+    </ol>
+</nav>
+
 <h1>Accounts</h1>
 
 <p>
     <a asp-action="Add" class="btn btn-primary mb-4">Create New</a>
 </p>
 
-<select class="form-control" id="roleId" style="max-width: 180px" asp-items="@ViewBag.Role">
-    <option disabled selected>Role</option>
-    <option value="0">All</option>
-</select>
 
 <table class="table">
     <thead>
@@ -48,49 +51,14 @@
                     @Html.DisplayFor(modelItem => item.Role)
             </td>
             <td>
-                    @if (item.isLooked)
-                    {
-                        <a href="@Url.Action("Unlock", "AccountAdmin", new { userId = item.Id })" class="btn btn-primary">Mở Khóa</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("Lock", "AccountAdmin", new { userId = item.Id })" class="btn btn-danger">Khóa</a>
-                    }
-                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id">Edit</a>
 
-                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id">Delete</a>
+                    <form asp-action="LockUnlock" method="post" style="width: 58px; float: left">
+                        <input type="hidden" name="Id" value="@item.Id" />
+                        <button class="btn btn-success" type="submit">LockUnlock</button>
+                    </form>
+                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id">Update</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
-
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            jQuery("#roleId").change(function () {
-                var roleID = jQuery(this).children(":selected").attr("value");
-                roleID = parseFloat(roleID);
-                $("#roleId option").removeAttr("selected");
-                $("#roleId > [value = " + roleID + "]").attr("selected", "true");
-                $ajax({
-                    url: '/Admin/AccountAdmin/Filtter',
-                    datatype: "json",
-                    type: "GET",
-                    data: {
-                        RoleID = roleID
-                    },
-                    async: true,
-                    success: function (results) {
-                        if (results.status == "success") {
-                            window.location.href = results.redirectUrl;
-                        }
-                    },
-                    error: function (xhr) {
-                        alert('Error');
-                    }
-                });
-            });
-        });
-    </script>
-}

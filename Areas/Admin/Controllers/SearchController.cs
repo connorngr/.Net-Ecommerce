@@ -18,38 +18,12 @@ namespace Innerglow_App.Areas.Admin.Controllers
         public IActionResult FindProduct(string keyword)
         {
             List<Product> products = new List<Product>();
-            if (string.IsNullOrEmpty(keyword) || keyword.Length < 1)
+            if (string.IsNullOrEmpty(keyword))
             {
-                return PartialView("ListProductsSearchPartial", null);
+                return PartialView("ListProductsSearchPartial", _context.Products.AsNoTracking().Include(x => x.Category).OrderByDescending(x => x.Id).ToList());
             }
             products = _context.Products.AsNoTracking().Include(x => x.Category).Where(x => x.ProductName.Contains(keyword)).OrderByDescending(x => x.Id).ToList();
-            if (products == null)
-            {
-                return PartialView("ListProductsSearchPartial", null);
-            }
-            else
-            {
-                return PartialView("ListProductsSearchPartial", products);
-            }
-        }
-
-        [HttpPost]
-        public IActionResult FindOrder(string keyword)
-        {
-            List<Order> products = new List<Order>();
-            if (string.IsNullOrEmpty(keyword) || keyword.Length < 1)
-            {
-                return PartialView("ListOrdersSearchPartial", null);
-            }
-            products = _context.Orders.AsNoTracking().Include(x => x.OrderStatus).Where(x => x.OrderStatus.StatusName.Contains(keyword)).OrderByDescending(x => x.Id).ToList();
-            if (products == null)
-            {
-                return PartialView("ListOrdersSearchPartial", null);
-            }
-            else
-            {
-                return PartialView("ListOrdersSearchPartial", products);
-            }
+            return PartialView("ListProductsSearchPartial", products);
         }
     }
 }

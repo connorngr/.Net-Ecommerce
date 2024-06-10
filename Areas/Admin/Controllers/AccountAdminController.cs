@@ -142,36 +142,31 @@ namespace Innerglow_App.Areas.Admin.Controllers
                 _notifService.Success("Account updated successfully");
                 return RedirectToAction("Index");
             }
-            _notifService.Success("Account updated failed");
+            _notifService.Error("Account updated failed");
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Lock(string id)
+        public async Task<IActionResult> LockUnlock(string id)
         {
             var userLock = await _userManager.FindByIdAsync(id);
-            if (userLock == null)
+            /*if (userLock == null)
             {
                 return NotFound();
-            }
-            await _userManager.SetLockoutEnabledAsync(userLock, true);
-            await _userManager.SetLockoutEndDateAsync(userLock, DateTimeOffset.MaxValue);
-            userLock.isLooked = true;
-            await _userManager.UpdateAsync(userLock);
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Unlock(string id)
-        {
-            var userLock = await _userManager.FindByIdAsync(id);
-            if (userLock == null)
+            }*/
+            if (userLock.LockoutEnd != null && userLock.LockoutEnd > DateTime.Now)
             {
-                return NotFound();
+                //user is currently locked and we need to unlock them
+                userLock.LockoutEnd = DateTime.Now;
+                _notifService.Success("Unlock account successfully");
             }
-            await _userManager.SetLockoutEndDateAsync(userLock, null);
-            await _userManager.SetLockoutEnabledAsync(userLock, false);
-            userLock.isLooked = false;
+            else
+            {
+                userLock.LockoutEnd = DateTime.Now.AddYears(1000);
+                _notifService.Success("Lock account successfully");
+            }
+            /*await _userManager.SetLockoutEnabledAsync(userLock, true);
+            await _userManager.SetLockoutEndDateAsync(userLock, DateTimeOffset.MaxValue);*/
             await _userManager.UpdateAsync(userLock);
             return RedirectToAction("Index");
         }

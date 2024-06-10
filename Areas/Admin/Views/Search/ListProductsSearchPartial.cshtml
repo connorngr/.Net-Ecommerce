@@ -9,9 +9,6 @@
                 @Html.DisplayFor(modelItem => item.ProductName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
@@ -21,9 +18,9 @@
                 @Html.DisplayFor(modelItem => item.Category.CategoryName)
             </td>
             <td>
-                <a class="btn btn-success" asp-action="Display" asp-route-id="@item.Id">View</a>
-                <a class="btn btn-warning" asp-action="Update" asp-route-id="@item.Id">Edit</a>
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a class="btn btn-success" asp-area="Admin" asp-controller="ProductAdmin" asp-action="Display" asp-route-id="@item.Id">View</a>
+                <a class="btn btn-warning" asp-area="Admin" asp-controller="ProductAdmin" asp-action="Update" asp-route-id="@item.Id">Edit</a>
+                <a class="btn btn-danger" asp-area="Admin" asp-controller="ProductAdmin" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
     }

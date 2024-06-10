@@ -64,9 +64,6 @@ namespace Innerglow_App.Areas.Admin.Controllers
                 var existingProduct = await _orderRepository.GetByIdAsync(id); // Giả định có phương thức GetByIdAsync
 
                 existingProduct.OrderDate = product.OrderDate;
-                existingProduct.ShippingAddress = product.ShippingAddress;
-                existingProduct.PhoneNumber = product.PhoneNumber;
-                existingProduct.Notes = product.Notes;
                 existingProduct.OrderStatusId = product.OrderStatusId;
                 await _orderRepository.UpdateAsync(existingProduct);
                 return RedirectToAction(nameof(Index));
