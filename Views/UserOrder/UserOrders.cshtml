@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Order>
 
 @{
-    ViewData["Title"] = "GetUserCart";
+    ViewData["Title"] = "Your Cart";
 }
 
 @if (Model != null && Model.Count() > 0)
@@ -12,11 +12,11 @@
                 <div class="col-lg-10 col-xl-8">
                     <div class="card" style="border-radius: 10px;">
                         <div class="card-header px-4 py-5">
-                            <h5 class="text-muted mb-0" style="color:#228b22;">Cám ơn đã đặt hàng!</h5>
+                            <h5 class="text-muted mb-0" style="color:#228b22;">Thank you for your order!</h5>
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <p class="lead fw-normal mb-0" style="color: #228b22;">Đơn hàng</p>
+                                <p class="lead fw-normal mb-0" style="color: #228b22;">Order</p>
                             </div>
                         </div>
                         @foreach (var order in Model.Reverse())
@@ -43,13 +43,13 @@
                                                         <p class="text-muted mb-0">@item.Product.ProductName</p>
                                                     </div>
                                                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                                        <p class="text-muted mb-0 small">Loại: @item.Product.Category.CategoryName</p>
+                                                        <p class="text-muted mb-0 small">Category: @item.Product.Category.CategoryName</p>
                                                     </div>
                                                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                                        <p class="text-muted mb-0 small">Đơn giá: @item.Product.Price đ</p>
+                                                        <p class="text-muted mb-0 small">Price: @item.Product.Price đ</p>
                                                     </div>
                                                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                                        <p class="text-muted mb-0 small">Số lượng: @item.Quantity</p>
+                                                        <p class="text-muted mb-0 small">Quantity: @item.Quantity</p>
                                                     </div>
                                                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                                                         <p class="text-muted mb-0 small">@(order.OrderDetail.Select(item => item.Product.Discount * item.Quantity).Sum())đ</p>
@@ -59,7 +59,7 @@
                                                 }
                                                 <div class="row d-flex align-items-center">
                                                     <div class="col-md-2">
-                                                        <p class="text-muted mb-0 small">Ngày đặt hàng</p>
+                                                        <p class="text-muted mb-0 small">Order date </p>
                                                         <p class="text-muted mb-0 small">@order.OrderDate.ToString("dd-MM-yyyy")</p>
                                                     </div>
                                                     <div class="col-md-10">
@@ -73,24 +73,24 @@
                                                             {
                                                                 <p class="text-muted mt-1 mb-0 small ms-xl-5">@order.OrderStatus.StatusName</p>
                                                             }
-                                                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Đã giao hàng</p>
+                                                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     <div class="d-flex justify-content-between pt-2">
-                                        <p class="fw-bold mb-0">Chi tiết đơn hàng</p>
-                                        <p class="text-muted mb-0"><span class="fw-bold me-4">Tổng: </span> @(order.OrderDetail.Sum(item => item.Product.Discount * item.Quantity))đ</p>
+                                        <p class="fw-bold mb-0">Order details</p>
+                                        <p class="text-muted mb-0"><span class="fw-bold me-4">Total: </span> @(order.OrderDetail.Sum(item => item.Product.Discount * item.Quantity))đ</p>
                                     </div>
                                     <div class="d-flex justify-content-between pt-2">
                                         <p class="text-muted mb-0">Mã số đơn: </p>
-                                        <p class="text-muted mb-0"><span class="fw-bold me-4">Đã giảm: </span>@(order.OrderDetail.Sum(item => item.Product.Price * item.Quantity) - order.OrderDetail.Sum(item => item.Product.Discount * item.Quantity))đ</p>
+                                        <p class="text-muted mb-0"><span class="fw-bold me-4">Discounted: </span>@(order.OrderDetail.Sum(item => item.Product.Price * item.Quantity) - order.OrderDetail.Sum(item => item.Product.Discount * item.Quantity))đ</p>
                                     </div>
                                 </div>
                                 <div class="card-footer border-0 px-4 py-5" style="background-color:#228b22;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                                     <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
-                                        Tổng tiền trả: <span class="h2 mb-0 ms-2">@(order.OrderDetail.Sum(item => item.Product.Discount * item.Quantity))đ</span>
+                                        Total payment: <span class="h2 mb-0 ms-2">@(order.OrderDetail.Sum(item => item.Product.Discount * item.Quantity))đ</span>
                                     </h5>
                                 </div>
                             }
@@ -104,7 +104,7 @@
 else
 {
     <section class="h-100 gradient-custom m-auto" style="background-color:white;">
-        <h5>Bạn chưa có đơn hàng nào</h5>
+        <h5>You don't have any orders</h5>
     </section>
 }
 

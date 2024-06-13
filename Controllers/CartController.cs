@@ -132,9 +132,9 @@ namespace Innerglow_App.Controllers
                 string notes = HttpContext.Session.GetString("Notes");
                 _logger.LogInformation(notes + number + address);
                 var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-                await _emailSender.SendEmailAsync(user.Email, "Đơn hàng của bạn đã nhập đủ thông tin và thanh toán thành công",
-                            $"Khi bạn nhận được email này nghĩa là đơn hàng của bạn đã được xác nhận vui lòng xem tiến trình giao hàng trên web" +
-                            $" <br/> Cám ơn bạn đã tin tưởng Innerglow chúng tôi.");
+                await _emailSender.SendEmailAsync(user.Email, "Your order information have been entered completely and payment completely",
+                            $"When you receive this email, your order has been confirmed. Please view the delivery progress on the website" +
+                            $" <br/> Thank you for trusting us in Innerglow.");
                 bool isCheckedOut = await _cartRepo.DoCheckout(address, number, notes);
                 if (!isCheckedOut)
                     throw new Exception("Something happen in server side");
@@ -152,7 +152,7 @@ namespace Innerglow_App.Controllers
         [HttpPost]
         public async Task<IActionResult> ConfirmPaymentClient(string address, string number, string notes)
         {
-            //cập nhật dữ liệu vào db
+            
             HttpContext.Session.SetString("Address", address);
             HttpContext.Session.SetString("Number", number);
             HttpContext.Session.SetString("Notes", notes);

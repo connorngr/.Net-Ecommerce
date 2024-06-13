@@ -12,24 +12,24 @@ namespace Innerglow_App.Models
         public int Id { get; set; }
         [Required]
         [StringLength(100,MinimumLength=3)]
-        [DisplayName("Tên sản phẩm")]
+        [DisplayName("Name product")]
         public string ProductName { get; set; }
         [Required]
-        [DisplayName("Số lượng")]
-        [Range(0, 1000, ErrorMessage = "{0} phải lớn hơn {1} và nhỏ hơn {2}")]
+        [DisplayName("Quantity")]
+        [Range(0, 1000, ErrorMessage = "{0} must be greater than {1} and less than {2}")]
         public int Quantity { get; set; }
         public DateTime Time { get; set; } = DateTime.UtcNow;
         [Required]
         [DisplayName("Giá")]
-        [Range(1000,100000000, ErrorMessage = "{0} phải lớn hơn {1} và nhỏ hơn {2}")]
+        [Range(1000,100000000, ErrorMessage = "{0} must be greater than {1} and less than {2}")]
         public int Price { get; set; }
         [MaybeNull]
         [DisplayName("Sau khi giảm giá")]
-        [Range(1000, 100000000, ErrorMessage = "{0} phải lớn hơn {1} và nhỏ hơn {2}")]
+        [Range(1000, 100000000, ErrorMessage = "{0} must be greater than {1} and less than {2}")]
         public int Discount { get; set; }
         
         [Required]
-        [DisplayName("Mô tả sản phẩm")]
+        [DisplayName("Description product")]
         public string Description { get; set; }
         [MaybeNull]
         public string Img_Url { get; set; }
@@ -37,7 +37,7 @@ namespace Innerglow_App.Models
         [MaybeNull]
         public List<string> Img_Urls { get; set; }
         [MaybeNull]
-        [DisplayName("Chi tiết sản phẩm")]
+        [DisplayName("Details product")]
         public string DetailProduct { get; set; }
         [Required]
         public int CategoryId { get; set; }

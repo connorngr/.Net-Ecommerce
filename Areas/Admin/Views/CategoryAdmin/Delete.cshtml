@@ -1,11 +1,5 @@
 ﻿@model             Category
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" asp-action="Index">Category</a></li>
-        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Delete</li>
-    </ol>
-</nav>
-<h2>Delete Category</h2>
+<h2>Delete category</h2>
 <form asp-action="DeleteConfirmed" method="post">
     <input type="hidden" asp-for="Id" />
     <p>Are you sure you want to delete @Model.CategoryName?</p>

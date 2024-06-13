@@ -35,7 +35,7 @@
                                                             <div class="product-name">
                                                                 <a href="#">@item.Product.ProductName</a>
                                                                 <div class="product-info">
-                                                                    <div>Loại: <span class="value">@item.Product.Category.CategoryName</span></div>
+                                                                    <div>Category: <span class="value">@item.Product.Category.CategoryName</span></div>
                                                                     <td><strike>@item.Product.Price</strike> @item.Product.Discount X @item.Quantity VND</td>
                                                                 </div>
                                                             </div>
@@ -58,15 +58,15 @@
                     </div>
                     <div class="col-md-12 col-lg-4">
                         <div class="summary">
-                            <h3>Hóa đơn</h3>
-                            <div class="summary-item"><span class="text">Tổng giá</span><span class="price">@(Model.CartDetails.Select(item => item.Product.Price
+                            <h3>Bill</h3>
+                            <div class="summary-item"><span class="text">Total price</span><span class="price">@(Model.CartDetails.Select(item => item.Product.Price
                                 * item.Quantity).Sum()) VND</span></div>
-                                <div class="summary-item"><span class="text">Giảm giá</span><span class="price">@(Model.CartDetails.Select(item => item.Product.Price
+                                <div class="summary-item"><span class="text">Discounted</span><span class="price">@(Model.CartDetails.Select(item => item.Product.Price
                                     * item.Quantity).Sum() - Model.CartDetails.Select(item => item.Product.Discount * item.Quantity).Sum()) VND</span></div>
-                            <div class="summary-item"><span class="text">Vận chuyển</span><span class="price">Tính sau thanh toán</span></div>
-                            <div class="summary-item"><span class="text">Tổng</span><span class="price">@(Model.CartDetails.Select(item => item.Product.Discount * item.Quantity).Sum()) VND</span></div>
+                            <div class="summary-item"><span class="text">Shipping</span><span class="price">Caculated after the payment</span></div>
+                            <div class="summary-item"><span class="text">Total</span><span class="price">@(Model.CartDetails.Select(item => item.Product.Discount * item.Quantity).Sum()) VND</span></div>
 
-                            <a style="color:white;text-decoration:none;" class="btn btn-success btn-lg btn-block mt-2" asp-action="ConfirmPaymentClient">Thanh toán</a>
+                            <a style="color:white;text-decoration:none;" class="btn btn-success btn-lg btn-block mt-2" asp-action="ConfirmPaymentClient">Pay</a>
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@ else
                 <div class="row">
                     <div class="col-md-12 col-lg-8">
                         <div class="items">
-                                <h5>Bạn chưa đặt đơn hàng nào</h5>
+                                <h5>You have no order! Please choose the product on the website</h5>
                             </div>
                         </div>
                     </div>
