@@ -112,8 +112,15 @@
             </div> *@
             <div class="card_wrapper">
                     <header class="mb-4">
+                    @if(Model.Search == "" && Model.CategoryID == 0)
+                    {
                         <h3>Sản phẩm mới</h3>
-                    </header>
+                    }
+                    else
+                    {
+                        <h3>Sản phẩm tìm kiếm</h3>
+                    }
+                </header>
                     @* <div class="row"> *@
                         <div class="owl-carousel slider_carousel row">
                             @foreach (var Product in Model.Products.Reverse())
@@ -147,7 +154,7 @@
                     @* </div> *@
             </div>
             
-            
+            @if(Model.Search == "" && Model.CategoryID == 0)
             @foreach (var category in Model.Categories)
             {
                 <header class="mb-4">
@@ -184,7 +191,6 @@
                         }
                     }
                 </div>
-            }
             }
             </div>
     </div>
